@@ -1,0 +1,28 @@
+.logoNavBar {
+    width: 70px;
+    height: auto;
+}
+.logo {
+    width: 600px;
+    height: auto;
+}
+.logoNavBar:hover {
+    width: 100px;
+    height: auto;
+}
+body {
+    background: #FFFFFF;
+}
+.searchlanding{
+    width: 30%;
+}
+.searchanswer{
+    padding-left: 7%;
+}
+.dotline{
+    border-top: 1px dashed lightslategrey;
+
+}
+.smallmarginleft{
+    margin-left:1%;
+}
