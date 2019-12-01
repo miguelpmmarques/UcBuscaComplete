@@ -12,14 +12,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() throws Exception {
-		// you could execute some business logic here, but for now
-		// the result is "success" and struts.xml knows what to do
 		return SUCCESS;
 	}
 
 	public SearchModel getSearchModel() {
 		if(!session.containsKey("searchSession"))
-			this.setSearchModel(new SearchModel());
+			this.setSearchModel(new SearchModel(session));
 		return (SearchModel) session.get("searchSession");
 	}
 

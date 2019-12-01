@@ -8,24 +8,23 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import RMISERVER.ServerLibrary;
+import ucbusca.action.SearchAction;
 
 
 public class SearchModel {
-
-
-
 	private String seachWords;
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
+	private Map<String, Object> session;
 
-
-
-	public SearchModel() {
+	public SearchModel(Map<String, Object> session) {
+		this.session = session;
 		String propFileName = "RMISERVER/config.properties";
 		InputStream inputStream = SearchModel.class.getClassLoader().getResourceAsStream(propFileName);
 		try {
@@ -71,7 +70,11 @@ public class SearchModel {
 		HashMap<String,String> protocol;
 		ArrayList<HashMap<String,String>> anwser = new ArrayList<>();
 		System.out.println(this.seachWords);
-		this.seachWords = "Anonymous "+this.seachWords;
+		if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
+			this.seachWords = this.session.get("username")+" "+this.seachWords;
+		}else {
+			this.seachWords = "Anonymous "+this.seachWords;
+		}
 		String[] searchWordsSplited = this.seachWords.split("\\s+");
 
 
@@ -81,6 +84,7 @@ public class SearchModel {
 		protocol =  retry(searchWordsSplited,0);
 
 		ArrayList<HashMap<String,String>> searchHash;
+
 		for (String value : protocol.values()) {
 			HashMap<String,String> urlInfo  = new HashMap();
 			if (value.startsWith("http")){
@@ -99,9 +103,9 @@ public class SearchModel {
 				anwser.add(urlInfo);
 			}
 		}
-
 		return anwser;
 	}
+
 
 
 	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {

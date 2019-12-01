@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,6 +12,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-center navbar-expand-sm bg-warning navbar-dark">
 	<div class="container-fluid">
 		<ul class=" nav navbar-nav navbar-left">
@@ -22,24 +23,49 @@
 
 		<c:choose>
 			<c:when test="${session.loggedin == true}">
-				<ul class=" navbar-right nav navbar-nav ">
+
+				<ul class=" navbar-center nav navbar-nav ">
 					<li class="nav-item">
 						<h2 class="nav-link text-white"> <b> Welcome ${session.username} </b> </h2>
 					</li>
 				</ul>
 				<ul class=" navbar-right nav navbar-nav ">
+					<c:choose>
+						<c:when test="${session.admin == true}">
+							<li class="nav-item">
+								<a class="nav-link text-dark myTeamNav" href=''>  <b>Manage users</b> </a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark myTeamNav" href=''>  <b>System info</b> </a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark myTeamNav" href=''>  <b>Add url to UcBusca</b> </a>
+							</li>
+						</c:when>
+					</c:choose>
 					<li class="nav-item">
-						<a class="nav-link text-white" href='<s:url action="logout" ></s:url>'>  <b> Logout</b> </a>
+						<a class="nav-link text-white myTeamNav" href=''>  <b>Find Related Pages</b> </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white myTeamNav" href=''>  <b> My History</b> </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white myTeamNav" href='<s:url action="logout" ></s:url>'>  <b> Logout</b> </a>
 					</li>
 				</ul>
 			</c:when>
 			<c:otherwise>
+				<ul class=" navbar-center nav navbar-nav ">
+					<li class="nav-item">
+						<h1 class="nav-link text-white"> <b>Sparguetti Search</b></h1>
+					</li>
+				</ul>
 				<ul class=" navbar-right nav navbar-nav ">
 					<li class="nav-item">
-						<a class="nav-link text-white" href='<s:url action="showLogin" ></s:url>'> <b>Login </b> </a>
+						<a class="nav-link text-white myTeamNav" href='<s:url action="showLogin" ></s:url>'> <b>Login </b> </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link text-white"> <b> Register</b> </a>
+						<a class="nav-link text-white myTeamNav" href='<s:url action="showRegister" ></s:url>'> <b> Register</b> </a>
 					</li>
 				</ul>
 			</c:otherwise>

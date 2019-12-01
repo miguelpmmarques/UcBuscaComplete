@@ -38,9 +38,17 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
       <action name="login" class="ucbusca.action.LoginAction" method="execute">
           <result name="success">/index.jsp</result>
+          <result name="error">/login.jsp</result>
+      </action>
+      <action name="register" class="ucbusca.action.RegisterAction" method="execute">
+          <result name="success">/index.jsp</result>
+          <result name="error">/register.jsp</result>
       </action>
       <action name="showLogin">
           <result>/login.jsp</result>
+      </action>
+      <action name="showRegister">
+          <result>/register.jsp</result>
       </action>
       <action name="logout" class="ucbusca.action.LoginAction" method="logout">
           <result>/index.jsp</result>
