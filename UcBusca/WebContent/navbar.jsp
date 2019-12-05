@@ -36,16 +36,13 @@
 								<a class="nav-link text-dark myTeamNav" href=''>  <b>Manage users</b> </a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-dark myTeamNav" href=''>  <b>System info</b> </a>
+								<a class="nav-link text-dark myTeamNav" href='<s:url action="systeminfo" ></s:url>'>  <b>System info</b> </a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-dark myTeamNav" href=''>  <b>Add url to UcBusca</b> </a>
+								<a class="nav-link text-dark myTeamNav"  href='<s:url action="showAddurl" ></s:url>'>  <b>Add url to UcBusca</b> </a>
 							</li>
 						</c:when>
 					</c:choose>
-					<li class="nav-item">
-						<a class="nav-link text-white myTeamNav" href=''>  <b>Find Related Pages</b> </a>
-					</li>
 					<li class="nav-item">
 						<a class="nav-link text-white myTeamNav" href='<s:url action="history" ></s:url>'>  <b> My History</b> </a>
 					</li>
@@ -74,5 +71,17 @@
 
 	</div>
 </nav>
+
+<s:if test="hasActionErrors()">
+	<div class="alert alert-danger" role="alert">
+		<h5> <s:actionerror /></h5>
+	</div>
+
+</s:if>
+<s:if test="hasActionMessages()">
+	<div class="alert alert-success" role="alert">
+		<h5> <s:actionmessage/></h5>
+	</div>
+</s:if>
 </body>
 </html>

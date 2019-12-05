@@ -24,11 +24,13 @@
 </head>
 <body>
 
-<s:if test="hasActionMessages()">
-    <div class="alert alert-danger" role="alert">
-        <h5><s:actionmessage/></h5>
 
-    </div>
+<s:if test="hasActionErrors()">
+	<div class="alert alert-danger" role="alert">
+		<h5> <s:actionerror /></h5>
+	</div>
+
+
 </s:if>
 <div class="row" style="height: 50px;"></div>
 <div class="row">

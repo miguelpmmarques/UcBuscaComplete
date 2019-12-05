@@ -29,20 +29,17 @@ body {
 :root {
     --mainColor: #FFE531;
 }
-
+.footerbg{
+    background-color: #FFE531;
+}
 .myTeamNav{
-    background:
-            linear-gradient(
-                    to bottom, var(--mainColor) 0%,
-                    var(--mainColor) 100%
-            );
+    background: linear-gradient(to bottom, var(--mainColor) 0%, var(--mainColor) 100%);
     background-position: 0 100%;
     background-repeat: repeat-x;
     background-size: 4px 4px;
     text-decoration: none;
     transition: background-size .2s;
 }
-
 
 .myTeamNav:hover {
     background-size: 4px 50px;

@@ -17,33 +17,28 @@
 <s:include value="navbar.jsp"></s:include>
 
 <div class="col-12 text-center">
-
 		<img class="logo" src="logo-SD.png">
 	</div>
 <div class="col-12 text-center">
-		<c:choose>
-		<c:when test="${session.loggedin == true}">
-			<h1> <b> ${session.username}, Uc Busca? </b> </h1>
-			</c:when>
-			<c:otherwise>
-				<h1> <b><s:text name="Uc Busca? " /></b> </h1>
-			</c:otherwise>
-			</c:choose>
+	<h1> <b>Add URL to Sparguetti Search</b></h1>
 		<br>
-		<s:form action="search" method="post">
-			<s:textfield cssClass = "searchlanding" name="SearchModel.seachWords" />
-			<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Search" />
+		<s:form action="addUrl" method="post">
+			<s:textfield cssClass = "searchlanding" name="url" />
+			<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Add" />
 		</s:form>
 
 	</div>
 
 <footer class="page-footer font-small fixed-bottom">
+
+	<!-- Copyright -->
 	<div class="footer-copyright text-center py-3">
-		Start with <b>http://</b> or <b>https:// </b> to find referenced <b>urls</b>  in the search bar!
+		Find referenced URLS in the search bar! Start with http:// or https://
 	</div>
 	<div class="footer-copyright text-center py-3 bg-warning">
 		© 2019 Copyright: Miguel Marques & Paulo Cardoso
 	</div>
+	<!-- Copyright -->
 
 </footer>
 
