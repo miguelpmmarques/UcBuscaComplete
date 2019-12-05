@@ -3,11 +3,11 @@ package ucbusca.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
-import ucbusca.model.HistoryModel;
+import ucbusca.model.SystemInfoModel;
 
 import java.util.Map;
 
-public class HistoryAction extends ActionSupport implements SessionAware {
+public class SystemInfoAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
 
@@ -15,15 +15,14 @@ public class HistoryAction extends ActionSupport implements SessionAware {
 	public String execute() throws Exception {
 		return SUCCESS;
 	}
-
-	public HistoryModel getHistoryModel() {
-		if(!session.containsKey("historySession"))
-			this.setHistoryModel(new HistoryModel(session));
-		return (HistoryModel) session.get("historySession");
+	public SystemInfoModel getSystemInfoModel() {
+		if(!session.containsKey("systemSession"))
+			this.setSystemInfoModel(new SystemInfoModel(session));
+		return (SystemInfoModel) session.get("systemSession");
 	}
 
-	public void setHistoryModel(HistoryModel historysession) {
-		this.session.put("historySession", historysession);
+	public void setSystemInfoModel(SystemInfoModel systemsession) {
+		this.session.put("systemSession", systemsession);
 	}
 
 	@Override

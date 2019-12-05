@@ -60,15 +60,14 @@ public class HistoryModel {
 	public ArrayList<String> getHistory() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<String> anwser = new ArrayList<>();
-
-
 		User thisUser = (User)session.get("user");
-		protocol =  retry(thisUser,0);
+		protocol = retry(thisUser,0);
 		int arraySize = Integer.parseInt((String)protocol.get("word_count"));
+
 		System.out.println(arraySize);
 		if (arraySize == 0)
 			anwser.add("Empty");
-		for(int i =arraySize ;i>0;i--){
+		for(int i = arraySize ;i>0;i--){
 			System.out.println((String)protocol.get("word_"+i));
 			anwser.add((String)protocol.get("word_"+i));
 		}
@@ -82,6 +81,7 @@ public class HistoryModel {
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
 			myDic = this.ucBusca.getHistory((User)parameter);
+			System.out.println(myDic);
 			return myDic;
 
 		}catch (Exception e) {

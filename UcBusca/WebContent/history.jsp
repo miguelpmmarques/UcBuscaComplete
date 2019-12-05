@@ -13,10 +13,28 @@
 </head>
 <body>
 <s:include value="navbar.jsp"></s:include>
-<h1>History</h1>
-<c:forEach items="${HistoryModel.history}" var="value">
-	<h3><c:out value="${value}" /></h3>
-	<br>
-</c:forEach>
+
+<div class="row">
+	<div class="col-3">
+
+	</div>
+	<div class="col-6 center-block">
+		<h1 class="display-2 text-center"> <b> History</b> </h1>
+		<br>
+		<br>
+		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
+			<ul class="list-group text-center" >
+				<c:forEach items="${HistoryModel.history}" var="value">
+					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+				</c:forEach>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-3">
+
+	</div>
+</div>
+
 </body>
 </html>

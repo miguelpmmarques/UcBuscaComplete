@@ -15,21 +15,19 @@
 </head>
 <body>
 <s:include value="navbar.jsp"></s:include>
-	<div class="col-12 text-center">
+
+<div class="col-12 text-center">
 
 		<img class="logo" src="logo-SD.png">
 	</div>
-	<div class="col-12 text-center">
+<div class="col-12 text-center">
 		<c:choose>
 		<c:when test="${session.loggedin == true}">
-
-
 			<h1> <b> ${session.username}, Uc Busca? </b> </h1>
 			</c:when>
 			<c:otherwise>
 				<h1> <b><s:text name="Uc Busca? " /></b> </h1>
 			</c:otherwise>
-
 			</c:choose>
 		<br>
 		<s:form action="search" method="post">
@@ -38,5 +36,17 @@
 		</s:form>
 
 	</div>
+
+<footer class="page-footer font-small fixed-bottom">
+	<div class="footer-copyright text-center py-3">
+		Start with <b>http://</b> or <b>https:// </b> to find referenced <b>urls</b>  in the search bar!
+	</div>
+	<div class="footer-copyright text-center py-3 bg-warning">
+		© 2019 Copyright: Miguel Marques & Paulo Cardoso
+	</div>
+
+</footer>
+
 </body>
+
 </html>

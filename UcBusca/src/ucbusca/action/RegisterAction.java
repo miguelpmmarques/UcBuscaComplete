@@ -57,15 +57,15 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 		System.out.println(this.username);
 		System.out.println(this.password);
 		if (this.username.equals("")){
-			addActionMessage("Please fill the username field");
+			addActionError("Please fill the username field");
 			return ERROR;
 		}
 		if (this.password1.equals("") || this.password.equals("")){
-			addActionMessage("Please fill the passwords field");
+			addActionError("Please fill the passwords field");
 			return ERROR;
 		}
 		if (!this.password1.equals( this.password)){
-			addActionMessage("Passwords dont match");
+			addActionError("Passwords dont match");
 			return ERROR;
 		}
 		User thisUser = new User(this.username,this.password,client);

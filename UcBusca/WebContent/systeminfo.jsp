@@ -13,26 +13,42 @@
 </head>
 <body>
 <s:include value="navbar.jsp"></s:include>
-
+<h1 class="display-2 text-center"> <b> SYSTEM INFO</b> </h1>
+<br>
+<br>
 <div class="row">
-	<div class="col-3">
-
-	</div>
-	<div class="col-6 center-block">
-		<h1 class="display-2 text-center"> <b> History</b> </h1>
-		<br>
+	<div class="col-4">
+		<h2 class=" text-center"> <b> Active Multicasts</b> </h2>
 		<br>
 		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
 			<ul class="list-group text-center" >
-				<c:forEach items="${HistoryModel.history}" var="value">
+				<c:forEach items="${SystemInfoModel.activemulticasts}" var="value">
 					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
 				</c:forEach>
 			</ul>
 		</div>
-
 	</div>
-	<div class="col-3">
-
+	<div class="col-4 center-block">
+		<h2 class="text-center"> <b> TOP 10 Searches</b> </h2>
+		<br>
+		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
+			<ul class="list-group text-center" >
+				<c:forEach items="${SystemInfoModel.toppages}" var="value">
+					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	<div class="col-4">
+		<h2 class="text-center"> <b> TOP 10 Most Popular Web Pages</b> </h2>
+		<br>
+		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
+			<ul class="list-group text-center" >
+				<c:forEach items="${SystemInfoModel.topsearches}" var="value">
+					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+				</c:forEach>
+			</ul>
+		</div>
 	</div>
 </div>
 

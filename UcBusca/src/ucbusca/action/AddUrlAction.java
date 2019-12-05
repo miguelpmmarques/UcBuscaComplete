@@ -16,145 +16,96 @@ import java.util.Map;
 import java.util.Properties;
 
 public class AddUrlAction extends ActionSupport implements SessionAware {
-	private static final long serialVersionUID = 5590830L;
-	private Map<String, Object> session;
-	private String username;
-	private String password;
-	private ServerLibrary ucBusca;
-	private Properties prop = new Properties();
+    private static final long serialVersionUID = 5590830L;
+    private Map<String, Object> session;
+    private String url;
+    private ServerLibrary ucBusca;
+    private Properties prop = new Properties();
 
 
-	@Override
-	public String execute() throws Exception {
-		String propFileName = "RMISERVER/config.properties";
-		InputStream inputStream = AddUrlAction.class.getClassLoader().getResourceAsStream(propFileName);
-		try {
-			this.prop.load(inputStream);
-		} catch (Exception e){
-			System.out.println(e);
-			System.out.println("Cannot read properties File");
-			return ERROR;
-		}
-		System.out.println(prop.getProperty("REGISTRYIP"));
-		System.out.println(prop.getProperty("REGISTRYPORT"));
-		System.out.println(prop.getProperty("LOOKUP"));
+    @Override
+    public String execute() throws Exception {
+        String propFileName = "RMISERVER/config.properties";
+        InputStream inputStream = AddUrlAction.class.getClassLoader().getResourceAsStream(propFileName);
+        try {
+            this.prop.load(inputStream);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Cannot read properties File");
+            return ERROR;
+        }
 
 
-		try {
-			this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
-			System.out.println("Connected to UcBusca");
+        try {
+            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
+            System.out.println("Connected to UcBusca");
 
-		} catch (Exception e) {
-			System.out.println(e);
-			System.out.println("Connecting...");
-			try {
-				Thread.sleep(2000);
-			}catch (InterruptedException es){
-				System.out.println("Sleep interrupted");
-			}
-		}
-		HashMap<String,String> protocol;
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Connecting...");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException es) {
+                System.out.println("Sleep interrupted");
+            }
+        }
+        HashMap<String, String> protocol;
 
-		SearchRMIClient client = new SearchRMIClient(ucBusca,prop);
-		System.out.println(this.username);
-		System.out.println(this.password);
-		if (this.username.equals("")){
-			addActionMessage("Please fill the username field");
-			return ERROR;
-		}
-		if (this.username.equals("") || this.password.equals("")){
-			addActionMessage("Please fill the password field");
-			return ERROR;
-		}
-		User thisUser = new User(this.username,this.password,client);
-		protocol =  retry(thisUser,0);
-		if(protocol.get("status").equals("logged on")){
-			System.out.println("LOGIN UTILIZADOR");
-			session.put("user",thisUser);
-			session.put("username", username);
-			session.put("loggedin", true);
-			session.put("admin", false);
+        SearchRMIClient client = new SearchRMIClient(ucBusca, prop);
+        System.out.println("-----" + this.url + "-----");
 
-		} else if(protocol.get("status").equals("logged admin")){
-			System.out.println("LOGIN UTILIZADOR");
-			session.put("user",thisUser);
-			session.put("username", username);
-			session.put("loggedin", true);
-			session.put("admin", true);
-		}
-		else {
-			System.out.println("INVALID LOGIN");
-			session.put("loggedin", false);
-			addActionMessage("INVALID LOGIN");
-			return ERROR;
-		}
+        if (this.url.trim().length() == 0 || !this.url.contains(".") || (!this.url.startsWith("http://") && !this.url.startsWith("https://"))) {
+			addActionError("Please write a valid URL");
+            return ERROR;
+        }
 
+        retry(this.url, 0);
+        addActionMessage("URL add with success");
+        return SUCCESS;
+    }
 
-		return SUCCESS;
-	}
-	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
-		HashMap<String,String> myDic;
-		try {
-			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
-			myDic = this.ucBusca.userLogin((User)parameter);
-			System.out.println(myDic);
-			return myDic;
+    private HashMap<String, String> retry(Object parameter, int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+        HashMap<String, String> myDic;
+        try {
+            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
+            myDic = this.ucBusca.addURLbyADMIN((String) parameter);
+            System.out.println(myDic);
+            return myDic;
 
-		}catch (Exception e) {
-			try {
-				Thread.sleep(2000);
-			} catch(InterruptedException e2) {
-				System.out.println("Interrupted");
-			}
-			if (replyCounter>16){
-				System.out.println("Please, try no reconnect to the UcBusca");
-				System.exit(0);
-			}
-			System.out.println(e);
-			System.out.println("Retransmiting... "+replyCounter);
-			retry(parameter,++replyCounter);
-		}
-		return new HashMap<String,String>();
-	}
-
-	public String logout() {
-		// remove userName from the session
-		if (this.session.containsKey("username")) {
-			this.session.remove("username");
-		}
-		if (this.session.containsKey("loggedin")) {
-			this.session.remove("loggedin");
-		}
-		if (this.session.containsKey("admin")) {
-			this.session.remove("admin");
-		}
-
-		return SUCCESS;
-	}
+        } catch (Exception e) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e2) {
+                System.out.println("Interrupted");
+            }
+            if (replyCounter > 16) {
+                System.out.println("Please, try no reconnect to the UcBusca");
+                System.exit(0);
+            }
+            System.out.println(e);
+            System.out.println("Retransmiting... " + replyCounter);
+            retry(parameter, ++replyCounter);
+        }
+        return new HashMap<String, String>();
+    }
 
 
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-	public Map<String, Object> getSession() {
-		return this.session;
-	}
+    @Override
+    public void setSession(Map<String, Object> session) {
+        this.session = session;
+    }
+
+    public Map<String, Object> getSession() {
+        return this.session;
+    }
 
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }

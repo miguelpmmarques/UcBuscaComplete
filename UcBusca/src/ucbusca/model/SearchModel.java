@@ -68,45 +68,55 @@ public class SearchModel {
 		HashMap<String,String> protocol;
 		ArrayList<HashMap<String,String>> anwser = new ArrayList<>();
 		System.out.println(this.seachWords);
-		if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
-			this.seachWords = this.session.get("username")+" "+this.seachWords;
-		}else {
-			this.seachWords = "Anonymous "+this.seachWords;
-		}
-		String[] searchWordsSplited = this.seachWords.split("\\s+");
 
+		if (this.seachWords.startsWith("http://") ||  this.seachWords.startsWith("https://")){
+			protocol =  findURL(this.seachWords,0);
 
-		for(int count = 0; count < searchWordsSplited.length; count++)
-			System.out.println(searchWordsSplited[count]);
-			//anwser.add(searchWordsSplited[count]);
-		protocol =  retry(searchWordsSplited,0);
+		}else{
 
-		ArrayList<HashMap<String,String>> searchHash;
-
-		for (String value : protocol.values()) {
-			HashMap<String,String> urlInfo  = new HashMap();
-			if (value.startsWith("http")){
-				try {
-					Document document = Jsoup.connect(value).get();
-					urlInfo.put("title", document.title());
-					urlInfo.put("description", document.select("meta[name=description]").get(0)
-							.attr("content"));
-					urlInfo.put("url", value);
-					urlInfo.put("found", "true");
-				} catch (IOException | IndexOutOfBoundsException e){
-					urlInfo.put("found", "false");
-					urlInfo.put("info", "--- Cannot reach page info ---");
-					urlInfo.put("url", value);
-				}
-				anwser.add(urlInfo);
+			if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
+				this.seachWords = this.session.get("username")+" "+this.seachWords;
+			}else {
+				this.seachWords = "Anonymous "+this.seachWords;
 			}
+			String[] searchWordsSplited = this.seachWords.split("\\s+");
+			protocol =  findWord(searchWordsSplited,0);
+
+
 		}
+
+
+
 		return anwser;
 	}
 
+	private HashMap<String,String> findURL(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+		HashMap<String,String> myDic;
+		try {
+			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
+			myDic = this.ucBusca.getReferencePages((String) parameter);
+			System.out.println(" --- Resultados de pesquisa ---\n\n");
+			System.out.println(myDic);
+			return myDic;
 
+		}catch (Exception e) {
+			try {
+				Thread.sleep(2000);
+			} catch(InterruptedException e2) {
+				System.out.println("Interrupted");
+			}
+			if (replyCounter>16){
+				System.out.println("Please, try no reconnect to the UcBusca");
+				System.exit(0);
+			}
+			System.out.println(e);
+			System.out.println("Retransmiting... "+replyCounter);
+			findURL(parameter,++replyCounter);
+		}
+		return new HashMap<String,String>();
+	}
 
-	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+	private HashMap<String,String> findWord(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
@@ -127,7 +137,7 @@ public class SearchModel {
 			}
 			System.out.println(e);
 			System.out.println("Retransmiting... "+replyCounter);
-			retry(parameter,++replyCounter);
+			findWord(parameter,++replyCounter);
 		}
 		return new HashMap<String,String>();
 	}
