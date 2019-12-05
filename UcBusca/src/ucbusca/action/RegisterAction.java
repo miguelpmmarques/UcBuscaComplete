@@ -2,8 +2,7 @@
 package ucbusca.action;
 
 import RMISERVER.SearchRMIClient;
-import RMISERVER.ServerLibrary;
-import RMISERVER.User;
+import RMISERVER.*;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -23,7 +22,6 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 	private String password1;
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
-
 
 	@Override
 	public String execute() throws Exception {
@@ -55,7 +53,6 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			}
 		}
 		HashMap<String,String> protocol;
-
 		SearchRMIClient client = new SearchRMIClient(ucBusca,prop);
 		System.out.println(this.username);
 		System.out.println(this.password);
@@ -71,16 +68,19 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			addActionMessage("Passwords dont match");
 			return ERROR;
 		}
-		protocol =  retry(new User(this.username,this.password,client),0);
+		User thisUser = new User(this.username,this.password,client);
+		protocol =  retry(thisUser,0);
 
 
 		if(protocol.get("status").equals("Success")){
+			session.put("user",thisUser);
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", false);
 
 		} else if(protocol.get("status").equals("Admin")){
 			System.out.println("Regist admin");
+			session.put("user",thisUser);
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", true);

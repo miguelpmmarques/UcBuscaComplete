@@ -2,7 +2,6 @@ package ucbusca.model;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,8 +12,7 @@ import java.util.Properties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import RMISERVER.ServerLibrary;
-import ucbusca.action.SearchAction;
+import RMISERVER.*;
 
 
 public class SearchModel {

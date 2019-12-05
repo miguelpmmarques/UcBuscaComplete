@@ -14,63 +14,7 @@
 <title>Uc Busca</title>
 </head>
 <body>
-
-<nav class="navbar navbar-center navbar-expand-sm bg-warning navbar-dark">
-	<div class="container-fluid">
-		<ul class=" nav navbar-nav navbar-left">
-			<li class="nav-item">
-				<a href="/Prime"><img class="logoNavBar" src="logo-SD.png"></a>
-			</li>
-		</ul>
-
-		<c:choose>
-			<c:when test="${session.loggedin == true}">
-				<ul class=" navbar-right nav navbar-nav ">
-					<c:choose>
-					<c:when test="${session.admin == true}">
-						<li class="nav-item">
-							<a class="nav-link text-dark myTeamNav" href=''>  <b>Manage users</b> </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark myTeamNav" href=''>  <b>System info</b> </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark myTeamNav" href=''>  <b>Add url to UcBusca</b> </a>
-						</li>
-					</c:when>
-					</c:choose>
-						<li class="nav-item">
-							<a class="nav-link text-white myTeamNav" href=''>  <b>Find Related Pages</b> </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-white myTeamNav" href=''>  <b> My History</b> </a>
-						</li>
-					<li class="nav-item">
-						<a class="nav-link text-white myTeamNav" href='<s:url action="logout" ></s:url>'>  <b> Logout</b> </a>
-					</li>
-				</ul>
-			</c:when>
-			<c:otherwise>
-				<ul class=" navbar-center nav navbar-nav ">
-					<li class="nav-item">
-						<h1 class="nav-link text-white"> <b>Sparguetti Search</b></h1>
-					</li>
-				</ul>
-				<ul class=" navbar-right nav navbar-nav ">
-					<li class="nav-item">
-						<a class="nav-link text-white myTeamNav" href='<s:url action="showLogin" ></s:url>'> <b>Login </b> </a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white myTeamNav" href='<s:url action="showRegister" ></s:url>'> <b> Register</b> </a>
-					</li>
-				</ul>
-			</c:otherwise>
-		</c:choose>
-
-
-	</div>
-</nav>
-
+<s:include value="navbar.jsp"></s:include>
 	<div class="col-12 text-center">
 
 		<img class="logo" src="logo-SD.png">

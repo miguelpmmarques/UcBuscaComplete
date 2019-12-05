@@ -2,8 +2,7 @@
 package ucbusca.action;
 
 import RMISERVER.SearchRMIClient;
-import RMISERVER.ServerLibrary;
-import RMISERVER.User;
+import RMISERVER.*;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -66,15 +65,18 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			addActionMessage("Please fill the password field");
 			return ERROR;
 		}
-		protocol =  retry(new User(this.username,this.password,client),0);
+		User thisUser = new User(this.username,this.password,client);
+		protocol =  retry(thisUser,0);
 		if(protocol.get("status").equals("logged on")){
 			System.out.println("LOGIN UTILIZADOR");
+			session.put("user",thisUser);
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", false);
 
 		} else if(protocol.get("status").equals("logged admin")){
 			System.out.println("LOGIN UTILIZADOR");
+			session.put("user",thisUser);
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", true);
