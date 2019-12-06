@@ -17,16 +17,18 @@ function main() {
             type: "POST",
             data: "SearchModel.seachWords="+document.getElementById("searchfield").value,
             success: function() {
-                window.location.href="";
-                /*
-                VER ISTO MELHOR!!!
+                //window.location.href="";
+
+
 
                 $('#searches').load(' #searches > *');
                 $('#searchanswer').load(' #searchanswer > *');
                 $('#description').load(' #description > *');
                 $('#linkurl').load(' #linkurl > *');
                 $('#language').load(' #language > *');
-                yandexTranslation();*/
+                yandexTranslation();
+
+
 
 
             },
@@ -60,7 +62,6 @@ function yandexTranslation() {
                         console.log(data);
                         language[i].innerHTML ="[Original Website Language: "+language_origin.toUpperCase()+"]";
                         descriptions[i].innerHTML = data.firstChild.textContent;
-
                     },
                     error : function() {
                         language[i].innerHTML ="[Impossible To Traslate]";
