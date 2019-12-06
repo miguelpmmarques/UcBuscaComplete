@@ -42,6 +42,15 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/history.jsp</result>
         </action>
 
+        <!-- MANAGE USERS -->
+        <action name="manageusers" class="ucbusca.action.ManageUsersAction" method="execute">
+            <result name="success">/manageusers.jsp</result>
+        </action>
+        <!-- ADD ADMIN -->
+        <action name="addAdmin" class="ucbusca.action.AddAdminAction" method="execute">
+            <result name="success">/manageusers.jsp</result>
+        </action>
+
         <!-- SYSTEM INFO -->
         <action name="systeminfo" class="ucbusca.action.SystemInfoAction" method="execute">
             <result name="success">/systeminfo.jsp</result>

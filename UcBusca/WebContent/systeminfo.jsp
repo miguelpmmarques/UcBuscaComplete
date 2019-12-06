@@ -23,29 +23,29 @@
 		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
 			<ul class="list-group text-center" >
 				<c:forEach items="${SystemInfoModel.activemulticasts}" var="value">
-					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+					<li class="list-group-item text-center"> <h3> Multicast - <b><c:out value="${value}" /> </b></h3> </li>
 				</c:forEach>
 			</ul>
 		</div>
 	</div>
 	<div class="col-4 center-block">
-		<h2 class="text-center"> <b> TOP 10 Searches</b> </h2>
+		<h2 class="text-center"> <b> TOP 10 Most Popular Web Pages </b> </h2>
 		<br>
 		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
 			<ul class="list-group text-center" >
-				<c:forEach items="${SystemInfoModel.toppages}" var="value">
-					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+				<c:forEach items="${SystemInfoModel.toppages}" var="value" varStatus="theCount">
+					<li class="list-group-item text-center"> <h3>${theCount.count}º -  <b><c:out value="${value}" /> </b></h3> </li>
 				</c:forEach>
 			</ul>
 		</div>
 	</div>
 	<div class="col-4">
-		<h2 class="text-center"> <b> TOP 10 Most Popular Web Pages</b> </h2>
+		<h2 class="text-center"> <b>TOP 10 Searches </b> </h2>
 		<br>
 		<div class="col-12 center-block" style=" height: 30vw; overflow: auto;">
 			<ul class="list-group text-center" >
-				<c:forEach items="${SystemInfoModel.topsearches}" var="value">
-					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3> </li>
+				<c:forEach items="${SystemInfoModel.topsearches}" var="value" varStatus="theCount">
+					<li class="list-group-item text-center"> <h3>${theCount.count}º - <b><c:out value="${value}" /> </b></h3> </li>
 				</c:forEach>
 			</ul>
 		</div>

@@ -64,7 +64,7 @@ public class SystemInfoModel {
 		System.out.println(arraySize);
 		if (arraySize == 0)
 			anwser.add("Empty");
-		for(int i = arraySize ;i>0;i--){
+		for(int i = 1 ;i<arraySize+1;i++){
 			System.out.println((String)this.protocol.get("activeMulticast_"+i));
 			anwser.add((String)this.protocol.get("activeMulticast_"+i));
 		}
@@ -78,7 +78,7 @@ public class SystemInfoModel {
 		System.out.println(arraySize);
 		if (arraySize == 0)
 			anwser.add("Empty");
-		for(int i = arraySize ;i>0;i--){
+		for(int i = 1 ;i<arraySize+1;i++){
 			System.out.println((String)this.protocol.get("important_pages_"+i));
 			anwser.add((String)this.protocol.get("important_pages_"+i));
 		}
@@ -93,7 +93,7 @@ public class SystemInfoModel {
 		System.out.println(arraySize);
 		if (arraySize == 0)
 			anwser.add("Empty");
-		for(int i = arraySize ;i>0;i--){
+		for(int i = 1 ;i<arraySize+1;i++){
 			System.out.println((String)this.protocol.get("itop_search_"+i));
 			anwser.add((String)this.protocol.get("top_search_"+i));
 		}

@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="style.css" >
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="updateSearch.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
@@ -15,33 +16,36 @@
 <s:include value="navbar.jsp"></s:include>
 <div class="col-12 text-left">
 	<br>
-	<s:form cssClass = "searchanswer" action="search" method="post">
-		<s:textfield cssClass="searchlanding" name="SearchModel.seachWords" />
+	<s:form id="myForm" cssClass = "searchanswer" action="search" method="post">
+		<s:textfield id="searchfield" cssClass="searchlanding" name="SearchModel.seachWords" />
 		<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Search" />
-
 	</s:form>
+
 
 </div>
 <br>
 <div class="dotline"></div>
 <br>
-<c:forEach items="${SearchModel.research}" var="element">
+<div id="searches">
+	<c:forEach items="${SearchModel.research}" var="element">
 
-	<div class="searchanswer">
-		<h4>
-			<a  href='${element.get('url')}'>
-				<c:out value="${element.get('title')}" />
+		<div class="searchanswer">
+			<h4>
+				<a  href='${element.get('url')}'>
+					<c:out value="${element.get('title')}" />
+				</a>
+			</h4>
+			<a  style="color:limegreen;" href='${element.get('url')}'>
+				<c:out value="${element.get('url')}" />
 			</a>
-		</h4>
-		<a  style="color:limegreen;" href='${element.get('url')}'>
-			<c:out value="${element.get('url')}" />
-		</a>
-		<p>
-			<c:out value="${element.get('description')}" />
-		</p>
-	</div>
-	<br>
-</c:forEach>
+			<p>
+				<c:out value="${element.get('description')}" />
+			</p>
+		</div>
+		<br>
+	</c:forEach>
+
+</div>
 
 </body>
 </html>

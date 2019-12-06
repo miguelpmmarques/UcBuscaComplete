@@ -39,9 +39,6 @@ public class SearchModel {
 
 			try {
 				this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
-
-				//this.ucBusca = (ServerLibrary) Naming.lookup(prop.getProperty("LOOKUP"));
-
 				System.out.println("Connected to UcBusca");
 
 			} catch (Exception e) {
@@ -63,11 +60,12 @@ public class SearchModel {
 	public void setSeachWords(String seachWords) {
 		this.seachWords = seachWords;
 	}
-	
+
 	public ArrayList<HashMap<String,String>> getResearch() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<HashMap<String,String>> anwser = new ArrayList<>();
 		System.out.println(this.seachWords);
+		String thisSearchWords;
 
 		if (this.seachWords.startsWith("http://") ||  this.seachWords.startsWith("https://")){
 			protocol =  findURL(this.seachWords,0);
@@ -75,14 +73,31 @@ public class SearchModel {
 		}else{
 
 			if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
-				this.seachWords = this.session.get("username")+" "+this.seachWords;
+				thisSearchWords = this.session.get("username")+" "+this.seachWords;
 			}else {
-				this.seachWords = "Anonymous "+this.seachWords;
+				thisSearchWords = "Anonymous "+this.seachWords;
 			}
-			String[] searchWordsSplited = this.seachWords.split("\\s+");
+			String[] searchWordsSplited = thisSearchWords.split("\\s+");
 			protocol =  findWord(searchWordsSplited,0);
 
-
+		}
+		for (String value : protocol.values()) {
+			HashMap<String,String> urlInfo  = new HashMap();
+			if (value.startsWith("http")){
+				try {
+					Document document = Jsoup.connect(value).get();
+					urlInfo.put("title", document.title());
+					urlInfo.put("description", document.select("meta[name=description]").get(0)
+							.attr("content"));
+					urlInfo.put("url", value);
+					urlInfo.put("found", "true");
+				} catch (IOException | IndexOutOfBoundsException e){
+					urlInfo.put("found", "false");
+					urlInfo.put("info", "--- Cannot reach page info ---");
+					urlInfo.put("url", value);
+				}
+				anwser.add(urlInfo);
+			}
 		}
 
 
