@@ -13,7 +13,14 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.mapper.action.prefix.enabled" value="true"/>
 
+
+
+
+
+
     <package name="ucbusca" extends="struts-default, json-default">
+
+
 
         <default-action-ref name="index"/>
 
@@ -25,6 +32,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
+
 
 
 
@@ -96,7 +104,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         </action>
 
         <action name="closePopUp" class="ucbusca.action.ClosePopUpAction">
-            <result>/close.jsp/</result>
+            <result>/close.jsp</result>
         </action>
         <action name="facebookAuth" class="ucbusca.action.FacebookAuth" method="execute">
             <result name="success">/close.jsp</result>
