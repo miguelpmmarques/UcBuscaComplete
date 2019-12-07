@@ -18,6 +18,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
+    <script src="login.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
     <title>Uc Busca</title>
@@ -66,9 +67,9 @@
     <div class="col-3"></div>
     <div class="col-6">
 
-        <a class="btn btn-block btn-social btn-facebook w-25 h-50 pb-3 m-3" href="<s:url action="facebookLogin" ></s:url>" id="signin_facebook">
+        <button class="btn btn-block btn-social btn-facebook w-25 h-50 pb-3 m-3" id="signin_facebook">
             <i class="fab fa-facebook-f pt-2" style="color:#fff"></i> Sign in with Facebook
-        </a>
+        </button>
     </div>
 
 </div>
