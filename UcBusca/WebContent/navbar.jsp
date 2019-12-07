@@ -23,7 +23,7 @@
 	<div class="container-fluid">
 		<ul class=" nav navbar-nav navbar-left">
 			<li class="nav-item">
-				<a href="/Prime"><img class="logoNavBar" src="logo-SD.png"></a>
+				<a href="/UCBUSCA"><img class="logoNavBar" src="logo-SD.png"></a>
 			</li>
 		</ul>
 

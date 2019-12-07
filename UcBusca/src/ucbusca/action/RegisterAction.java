@@ -84,9 +84,10 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", true);
+			addActionMessage("LOG ON AS AN ADMINISTRATOR");
 		}
 		else {
-			System.out.println("INVALID LOGIN");
+			addActionError("Username already in use");
 			session.put("loggedin", false);
 			return ERROR;
 		}

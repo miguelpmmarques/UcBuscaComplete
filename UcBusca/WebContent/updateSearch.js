@@ -18,19 +18,12 @@ function main() {
             data: "SearchModel.seachWords="+document.getElementById("searchfield").value,
             success: function() {
                 //window.location.href="";
-
-
-
                 $('#searches').load(' #searches > *');
                 $('#searchanswer').load(' #searchanswer > *');
                 $('#description').load(' #description > *');
                 $('#linkurl').load(' #linkurl > *');
                 $('#language').load(' #language > *');
                 yandexTranslation();
-
-
-
-
             },
             error : function() {
                 alert("Some error occured.");
