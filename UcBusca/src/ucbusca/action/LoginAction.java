@@ -75,7 +75,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			session.put("admin", false);
 
 		} else if(protocol.get("status").equals("logged admin")){
-			System.out.println("LOGIN UTILIZADOR");
+			addActionMessage("LOG ON AS AN ADMINISTRATOR");
 			session.put("user",thisUser);
 			session.put("username", username);
 			session.put("loggedin", true);

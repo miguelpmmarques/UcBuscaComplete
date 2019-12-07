@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Websocket">
+    <output-path>$PROJECT_DIR$/out/artifacts/Websocket</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="javax.websocket:javax.websocket-api:1.0" />
+          <element id="library" level="project" name="jsoup-1.12.1" />
+          <element id="library" level="project" name="lib" />
+        </element>
+        <element id="directory" name="classes">
+          <element id="module-output" name="UcBusca" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="UcBusca/web/Web" />
+    </root>
+  </artifact>
+</component>

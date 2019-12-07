@@ -34,6 +34,7 @@
 
 </s:if>
 <div class="row" style="height: 50px;"></div>
+
 <div class="row">
 
     <div class="col-3"></div>
@@ -61,6 +62,7 @@
     </div>
     <div class="col-3"></div>
 </div>
+
 </div>
 
 <div class="row">

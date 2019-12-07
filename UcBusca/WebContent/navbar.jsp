@@ -23,7 +23,7 @@
 	<div class="container-fluid">
 		<ul class=" nav navbar-nav navbar-left">
 			<li class="nav-item">
-				<a href="/Prime"><img class="logoNavBar" src="logo-SD.png"></a>
+				<a href="/UCBUSCA"><img class="logoNavBar" src="logo-SD.png"></a>
 			</li>
 		</ul>
 
@@ -33,7 +33,7 @@
 					<c:choose>
 						<c:when test="${session.admin == true}">
 							<li class="nav-item">
-								<a class="nav-link text-dark myTeamNav" href=''>  <b>Manage users</b> </a>
+								<a class="nav-link text-dark myTeamNav" href='<s:url action="manageusers" ></s:url>'>  <b>Manage users</b> </a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-dark myTeamNav" href='<s:url action="systeminfo" ></s:url>'>  <b>System info</b> </a>
