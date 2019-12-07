@@ -18,7 +18,7 @@ function main(){
 function receiveMessage(e, newWindow)
 {
   newWindow.close();
-  window.location.href=window.location.origin+ "/Prime/";
+  window.location.href=window.location.origin+ "/UCBUSCA/";
 }
 function popitup(url,windowName) {
     newwindow=window.open(url,windowName,'height=200,width=150');
