@@ -32,11 +32,6 @@ public class WebSocketManageUsers {
         System.out.println("START");
     }
 
-    @OnClose
-    public void end() {
-    	// clean up once the WebSocket connection is closed
-        users.remove(this);
-    }
 
     @OnMessage
     public void receiveMessage(String message) {
@@ -44,11 +39,6 @@ public class WebSocketManageUsers {
         // characters should be replaced with &lt; &gt; &quot; &amp;
     	sendMessage(message);
         System.out.println("RECEBEU"+message);
-    }
-    
-    @OnError
-    public void handleError(Throwable t) {
-    	t.printStackTrace();
     }
 
     private void sendMessage(String text) {

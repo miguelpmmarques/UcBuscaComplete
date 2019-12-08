@@ -56,7 +56,19 @@
                 <s:submit cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Login"/>
                 <input type="button" class="btn btn-light btn-outline-secondary smallmarginleft" value="Back"
                        onclick="window.location.href = '/UcBusca'">
+
             </s:form>
+            <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button class="btn btn-block btn-social btn-facebook" id="signin_facebook">
+                        <i class="fab fa-facebook-f pt-2" style="color:#fff"></i> Sign in with Facebook
+                    </button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
         </div>
         <br>
     </div>
@@ -65,16 +77,6 @@
 
 </div>
 
-<div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
-
-        <button class="btn btn-block btn-social btn-facebook w-25 h-50 pb-3 m-3" id="signin_facebook">
-            <i class="fab fa-facebook-f pt-2" style="color:#fff"></i> Sign in with Facebook
-        </button>
-    </div>
-
-</div>
 
 </body>
 </html>
