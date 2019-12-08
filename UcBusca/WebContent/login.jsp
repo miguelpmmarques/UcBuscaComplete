@@ -55,7 +55,7 @@
                 <br>
                 <s:submit cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Login"/>
                 <input type="button" class="btn btn-light btn-outline-secondary smallmarginleft" value="Back"
-                       onclick="window.location.href = '/UCBUSCA'">
+                       onclick="window.location.href = '/UcBusca'">
             </s:form>
         </div>
         <br>

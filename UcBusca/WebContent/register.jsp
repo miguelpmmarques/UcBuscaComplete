@@ -42,7 +42,7 @@
 				<br>
 				<br>
 				<s:submit cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Register" />
-				<input type="button" class="btn btn-light btn-outline-secondary smallmarginleft" value="Back" onclick="window.location.href = '/UCBUSCA'">
+				<input type="button" class="btn btn-light btn-outline-secondary smallmarginleft" value="Back" onclick="window.location.href = '/UcBusca'">
 			</s:form>
 		</div>
 		<br>
