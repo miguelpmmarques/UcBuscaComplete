@@ -85,16 +85,21 @@ public class SearchModel {
 			HashMap<String,String> urlInfo  = new HashMap();
 			if (value.startsWith("http")){
 				try {
-					Document document = Jsoup.connect(value).get();
-					urlInfo.put("title", document.title());
-					urlInfo.put("description", document.select("meta[name=description]").get(0)
-							.attr("content"));
-					urlInfo.put("url", value);
+					String[] split_info = value.split("\\*oo#&");
+					String url = split_info[0];
+					String title = split_info[1];
+					String description = split_info[2];
+					urlInfo.put("title", title);
+					urlInfo.put("description",description);
+					urlInfo.put("url", url);
 					urlInfo.put("found", "true");
-				} catch (IOException | IndexOutOfBoundsException e){
+				} catch (IndexOutOfBoundsException e){
+					String[] split_info = value.split("\\*oo#&");
+					String url = split_info[0];
 					urlInfo.put("found", "false");
-					urlInfo.put("info", "--- Cannot reach page info ---");
-					urlInfo.put("url", value);
+					urlInfo.put("title", "NO TITLE AVAILABLE");
+					urlInfo.put("description","NO DESCRIPTION AVAILABE");
+					urlInfo.put("url", url);
 				}
 				anwser.add(urlInfo);
 			}
