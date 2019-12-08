@@ -26,18 +26,11 @@ function connectToOnlineClients(host) { // connect to the host websocket
         alert('Get a real browser which supports WebSocket.');
         return;
     }
-
-    websocket.onopen    = onOpen;
-    //websocket.onclose   = onClose;
-    //websocket.onmessage = onMessage;
-    //websocket.onerror   = onError;
+    console.log("LOGOU AO WS "+websocket);
 }
-function onOpen(event) {
-    alert('Connected to ' + window.location.host + '.');
 
-}
 function addAdmin(myid) {
-    console.log(myid.split(" -> ")[0]);
+    websocket.send(myid.split(" -> ")[0]);
     $.ajax({
         type : "POST",
         url : "addAdmin",
