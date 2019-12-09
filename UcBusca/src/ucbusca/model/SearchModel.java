@@ -83,19 +83,30 @@ public class SearchModel {
 		}
 		for (String value : protocol.values()) {
 			HashMap<String,String> urlInfo  = new HashMap();
+
 			if (value.startsWith("http")){
+				String[] split_info = value.split("\\*oo#&");
+				System.out.println(value);
+				String url = split_info[0];
+				String title = "NO TITLE AVAILABLE";
+				String description ="NO DESCRIPTION AVAILABE";
 				try {
-					Document document = Jsoup.connect(value).get();
-					urlInfo.put("title", document.title());
-					urlInfo.put("description", document.select("meta[name=description]").get(0)
-							.attr("content"));
-					urlInfo.put("url", value);
-					urlInfo.put("found", "true");
-				} catch (IOException | IndexOutOfBoundsException e){
-					urlInfo.put("found", "false");
-					urlInfo.put("info", "--- Cannot reach page info ---");
-					urlInfo.put("url", value);
+					title = split_info[1];
+					System.out.println("Title - "+title);
+				} catch (IndexOutOfBoundsException e){
+					title = "NO TITLE AVAILABLE";
 				}
+				try {
+					description = split_info[2];
+					System.out.println("Description - "+description);
+				} catch (IndexOutOfBoundsException e){
+					description ="NO DESCRIPTION AVAILABE";
+				}
+				System.out.println("[INSERT] Description - "+description);
+				urlInfo.put("title", title);
+				urlInfo.put("description",description);
+				urlInfo.put("url", url);
+				urlInfo.put("found", "true");
 				anwser.add(urlInfo);
 			}
 		}
