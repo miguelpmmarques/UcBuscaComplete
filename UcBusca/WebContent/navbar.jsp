@@ -58,7 +58,7 @@
 
 				<ul class=" navbar-center nav navbar-nav ">
 					<li class="nav-item">
-						<h1 class="nav-link text-white"> <b>Sparguetti Search</b></h1>
+						<h1 class="nav-link text-white"> <b>Spaguetti Search</b></h1>
 						<h7 id="username" style="display: none">Anonimous</h7>
 					</li>
 				</ul>

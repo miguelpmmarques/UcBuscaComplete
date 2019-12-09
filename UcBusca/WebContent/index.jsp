@@ -18,7 +18,7 @@
 
 <div class="col-12 text-center">
 
-		<img class="logo" src="logo-SD.png">
+		<img class="logo" src="source.gif">
 	</div>
 <div class="col-12 text-center">
 		<c:choose>
