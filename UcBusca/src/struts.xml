@@ -12,7 +12,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.mapper.action.prefix.enabled" value="true"/>
-    <constant name="struts.action.excludePattern" value="/ws"/>
+    <constant name="struts.action.excludePattern" value="/wss"/>
 
     <package name="ucbusca" extends="struts-default, json-default">
 
@@ -34,6 +34,11 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
         <!-- 'index' action leads to the view provided by index.jsp -->
         <action name="index">
+            <result name="success">/index.jsp</result>
+        </action>
+
+        <!-- ADMIN NOTIFICATION -->
+        <action name="notifyAdmin" class="ucbusca.action.AdminNotificationAction" method="execute">
             <result name="success">/index.jsp</result>
         </action>
 

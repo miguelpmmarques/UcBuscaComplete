@@ -12,7 +12,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnError;
 import javax.websocket.Session;
 
-@ServerEndpoint(value = "/ws")
+@ServerEndpoint(value = "/wss")
 public class WebSocketManageUsers {
     private static final Set<WebSocketManageUsers> users =
             new CopyOnWriteArraySet<>();
@@ -30,6 +30,11 @@ public class WebSocketManageUsers {
         users.add(this);
         this.session = session;
         System.out.println("START");
+        for (WebSocketManageUsers user:this.users) {
+            System.out.println("ACTIVEUSER"+user.username);
+        }
+        sendMessage("CONNECTED");
+
     }
 
 

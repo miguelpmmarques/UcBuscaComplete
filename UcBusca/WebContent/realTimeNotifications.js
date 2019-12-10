@@ -5,33 +5,42 @@ if (document.readyState === "complete" ||
     document.addEventListener("DOMContentLoaded", main);
 }
 let username;
+let socket;
 function main() {
+    connectToOnlineClients('wss:/' + window.location.host + '/UcBusca/wss');
 
-    var websocket = null;
-    connectToOnlineClients('ws://' + window.location.host + '/UcBusca/ws');
 }
-function connectToOnlineClients(host) { // connect to the host websocket
+function connectToOnlineClients(host) {
     if ('WebSocket' in window)
-        websocket = new WebSocket(host);
+        socket = new WebSocket(host);
     else if ('MozWebSocket' in window)
-        websocket = new MozWebSocket(host);
+        socket = new MozWebSocket(host);
     else {
         alert('Get a real browser which supports WebSocket.');
         return;
     }
     username = document.getElementById("username").innerHTML;
-    console.log("USER---- "+username)
-    websocket.onopen    = onOpen;
-    //websocket.onclose   = onClose;
-    websocket.onmessage = onMessage;
+    socket.onopen    = onOpen;
+    socket.onmessage = onMessage;
 }
 
 function onMessage(message) {
     console.log(username);
-    console.log(message.data)
+    console.log(message.data);
 
     if (username=== message.data){
-        alert("JUST GOT PROMOTED TO ADMIN, PLEASE RELOAD THE PAGE")
+        alert("JUST GOT PROMOTED TO ADMIN IF YOU CHANGE PAGE YOU WI'LL HAVE THE ADMIN'S NAVBAR");
+        $.ajax({
+            type : "POST",
+            url : "notifyAdmin",
+
+            success : function(data) {
+                console.log("ADMIN ADDED");
+            },
+            error : function(data) {
+                alert("Some error occured.");
+            }
+        });
     }
 }
 
