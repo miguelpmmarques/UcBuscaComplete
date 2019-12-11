@@ -36,6 +36,19 @@ function addAdmin(myid) {
         data : "username=" + myid.split(" -> ")[0],
         success : function(data) {
             $('#hotreload').fadeOut('fast').load(' #hotreload > *').fadeIn("fast");
+            $('#listUsers').load(' #listUsers > *', function(responseText, textStatus, XMLHttpRequest) {
+                const admin_user = document.getElementsByClassName("users");
+                for (var i = 0; i < admin_user.length; i++) {
+                    console.log("BOTAO CRL")
+                    admin_user[i].addEventListener("click", function(e) {
+                        e.preventDefault();
+                        console.log("CLICOUUUUUU!!")
+                        addAdmin(this.id.split(" -> ")[0]);
+
+                    })
+                }
+            });
+
         },
         error : function(data) {
             alert("Some error occured.");
