@@ -50,7 +50,6 @@ public class SearchModel {
 					System.out.println("Sleep interrupted");
 				}
 			}
-
 	}
 
 	public String getSeachWords() {
@@ -73,7 +72,9 @@ public class SearchModel {
 		}else{
 
 			if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
-				thisSearchWords = this.session.get("username")+" "+this.seachWords;
+				String username = (String) this.session.get("username");
+				username = username.replaceAll(" ","+");
+				thisSearchWords = username+" "+this.seachWords;
 			}else {
 				thisSearchWords = "Anonymous "+this.seachWords;
 			}
@@ -110,8 +111,6 @@ public class SearchModel {
 				anwser.add(urlInfo);
 			}
 		}
-
-
 
 		return anwser;
 	}

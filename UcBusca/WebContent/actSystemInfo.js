@@ -4,13 +4,9 @@ if (document.readyState === "complete" ||
 } else {
     document.addEventListener("DOMContentLoaded", main);
 }
-let username;
-let socket;
 function main() {
-    connectToOnlineClients('wss:/' + window.location.host + '/UcBusca/wss');
-
-}
-function connectToOnlineClients(host) {
+    let host = 'wss:/' + window.location.host + '/UcBusca/wss';
+    console.log("ESTA AQUI FDS")
     if ('WebSocket' in window)
         socket = new WebSocket(host);
     else if ('MozWebSocket' in window)
@@ -19,15 +15,23 @@ function connectToOnlineClients(host) {
         alert('Get a real browser which supports WebSocket.');
         return;
     }
-    username = document.getElementById("username").innerHTML;
-    socket.onopen    = onOpen;
-    socket.onmessage = onMessage;
+    console.log("WELELELELEL");
+    socket.onopen    = onOpenSystem;
+    socket.onmessage = onMessageSystem;
+    console.log(1)
+}
+function onOpenSystem(event) {
+    console.log('Connected to ' + window.location.host + '.');
 }
 
-function onMessage(message) {
-    console.log("REAL TIME ---> "+message.data);
+function onMessageSystem(message) {
+    console.log("----------->"+message.data);
 
-    if (username=== message.data){
+    if ("CHANGED"=== message.data){
+        console.log("BATEU CARALHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        window.location.href = '';
+        $('#reloadStuff').load('reloadStuff');
+        /*
         alert("JUST GOT PROMOTED TO ADMIN IF YOU CHANGE PAGE YOU WI'LL HAVE THE ADMIN'S NAVBAR");
         $.ajax({
             type : "POST",
@@ -39,11 +43,7 @@ function onMessage(message) {
             error : function(data) {
                 alert("Some error occured.");
             }
-        });
+        });*/
     }
 }
 
-
-function onOpen(event) {
-    console.log('Connected to ' + window.location.host + '.');
-}
