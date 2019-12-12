@@ -32,6 +32,9 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() throws Exception {
+		if (!session.containsKey("admin") || !(boolean) session.get("admin")){
+			return "notAdmin";
+		}
 		String propFileName = "RMISERVER/config.properties";
 		InputStream inputStream = AddAdminAction.class.getClassLoader().getResourceAsStream(propFileName);
 		try {

@@ -2,6 +2,7 @@ package wss;
 
 import RMISERVER.ServerLibrary;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import ucbusca.model.HistoryModel;
 
 import javax.websocket.OnClose;
 import javax.websocket.server.ServerEndpoint;
@@ -23,11 +24,24 @@ public class WebSocketManageUsers {
     private static final Set<WebSocketManageUsers> users = new CopyOnWriteArraySet<>();
     private static final AtomicInteger sequence = new AtomicInteger(1);
     private final String username;
+    private Properties prop = new Properties();
     private Session session;
 
     public WebSocketManageUsers() {
         if (sequence.get()==1){
-            CheckChanges c = new CheckChanges(this);
+            String propFileName = "RMISERVER/config.properties";
+            InputStream inputStream = HistoryModel.class.getClassLoader().getResourceAsStream(propFileName);
+            try {
+                this.prop.load(inputStream);
+            } catch (Exception e){
+                System.out.println(e);
+                System.out.println("Cannot read properties File");
+
+            }
+            System.out.println(prop.getProperty("REGISTRYIP"));
+            System.out.println(prop.getProperty("REGISTRYPORT"));
+            System.out.println(prop.getProperty("LOOKUP"));
+            CheckChanges c = new CheckChanges(this,this.prop);
         }
         username = "User" + sequence.getAndIncrement();
         System.out.println("CONSTRUTOR");
@@ -78,15 +92,14 @@ class CheckChanges extends Thread{
     HashMap<String,String> systemInfo;
     HashMap<String,String> systemInfoAct;
     WebSocketManageUsers notify;
-    public CheckChanges(WebSocketManageUsers notify) {
+    public CheckChanges(WebSocketManageUsers notify,Properties prop) {
 
-        InputStream inputStream = null;
+        this.prop = prop;
         this.notify = notify;
-        String propFileName = "config.properties";
         System.out.println("Aqui");
 
         try {
-            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry("0.0.0.0",1401).lookup("ucBusca" );
+            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
             System.out.println("Connected to UcBusca");
         } catch (Exception e) {
             System.out.println(e);
@@ -140,12 +153,6 @@ class CheckChanges extends Thread{
                 notify.sendMessage("CHANGED");
                 System.out.println(".......................CHANGEDDDDDDDDDD.......................");
             }
-           /*    if (!new ArrayList<>( systemInfo.values() ).sort().equals(new ArrayList<>( systemInfoAct.values() ))){
-                systemInfo = systemInfoAct;
-                notify.sendMessage("CHANGED");
-                System.out.println(".......................CHANGEDDDDDDDDDD.......................");
-            }*/
-
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException e2) {
@@ -157,7 +164,7 @@ class CheckChanges extends Thread{
     private HashMap<String,String> retry(int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
         HashMap<String,String> myDic;
         try {
-            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry("0.0.0.0",1401).lookup("ucBusca" );
+            this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
 
             //this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
             myDic = this.ucBusca.sendSystemInfo();

@@ -39,9 +39,6 @@ public class HistoryModel {
 
 			try {
 				this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
-
-				//this.ucBusca = (ServerLibrary) Naming.lookup(prop.getProperty("LOOKUP"));
-
 				System.out.println("Connected to UcBusca");
 
 			} catch (Exception e) {

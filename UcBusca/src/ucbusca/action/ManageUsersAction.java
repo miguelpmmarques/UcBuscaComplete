@@ -12,7 +12,10 @@ public class ManageUsersAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 
 	@Override
-	public String execute() throws Exception {
+	public String execute() {
+		if (!session.containsKey("admin") || !(boolean) session.get("admin")){
+			return "notAdmin";
+		}
 		return SUCCESS;
 	}
 
@@ -30,4 +33,8 @@ public class ManageUsersAction extends ActionSupport implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
+	public Map<String, Object> getSession() {
+		return this.session;
+	}
+
 }

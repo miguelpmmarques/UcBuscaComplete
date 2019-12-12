@@ -13,6 +13,9 @@ public class SystemInfoAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() throws Exception {
+		if (!session.containsKey("admin") || !(boolean) session.get("admin")){
+			return "notAdmin";
+		}
 		return SUCCESS;
 	}
 	public SystemInfoModel getSystemInfoModel() {
@@ -29,4 +32,8 @@ public class SystemInfoAction extends ActionSupport implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
+	public Map<String, Object> getSession() {
+		return this.session;
+	}
+
 }

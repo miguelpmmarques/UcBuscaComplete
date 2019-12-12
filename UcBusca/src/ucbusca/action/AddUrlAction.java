@@ -25,6 +25,10 @@ public class AddUrlAction extends ActionSupport implements SessionAware {
 
     @Override
     public String execute() throws Exception {
+        boolean flag = (boolean) session.get("admin");
+        if (!flag){
+            return "notAdmin";
+        }
         String propFileName = "RMISERVER/config.properties";
         InputStream inputStream = AddUrlAction.class.getClassLoader().getResourceAsStream(propFileName);
         try {

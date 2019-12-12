@@ -21,14 +21,13 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
         <global-results>
             <result name="error">/error.jsp</result>
+            <result name="notAdmin">/permissions.jsp</result>
         </global-results>
 
         <!-- all exceptions not caught by the application will lead to error.jsp -->
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
-
-
 
 
         <!-- 'index' action leads to the view provided by index.jsp -->
@@ -66,7 +65,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         </action>
 
         <!-- ADD URL -->
-        <action name="showAddurl">
+        <action name="showAddurl" class="ucbusca.action.ShowAddUrlAction" method="execute">
             <result>/addUrl.jsp</result>
         </action>
         <action name="addUrl" class="ucbusca.action.AddUrlAction" method="execute">
