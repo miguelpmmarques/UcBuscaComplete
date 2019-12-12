@@ -25,7 +25,7 @@
 		<br>
 		<br>
 		<div id="hotreload" class="col-12 center-block" style=" height: 30vw; overflow: auto;">
-			<ul class="list-group text-center" >
+			<ul id = "listUsers" class="list-group text-center" >
 				<c:forEach items="${ManageUsersModel.manageusers}" var="value">
 					<li class="list-group-item text-center"> <h3> <b><c:out value="${value}" /> </b></h3>
 						<c:if test="${fn:endsWith(value, 'User')}">

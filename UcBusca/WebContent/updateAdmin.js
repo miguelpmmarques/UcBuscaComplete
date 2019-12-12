@@ -4,7 +4,6 @@ if (document.readyState === "complete" ||
 } else {
     document.addEventListener("DOMContentLoaded", main);
 }
-
 function main() {
     const admin_user = document.getElementsByClassName("users");
     for (var i = 0; i < admin_user.length; i++) {
@@ -14,29 +13,42 @@ function main() {
 
         })
     }
-    var websocket = null;
-    connectToOnlineClients('ws://' + window.location.host + '/UcBusca/ws');
+    connectToOnlineClients('wss:/' + window.location.host + '/UcBusca/wss');
+    socket.onopen    = onOpen;
+    socket.onmessage = onMessage;
+
 }
-function connectToOnlineClients(host) { // connect to the host websocket
-    if ('WebSocket' in window)
-        websocket = new WebSocket(host);
-    else if ('MozWebSocket' in window)
-        websocket = new MozWebSocket(host);
-    else {
-        alert('Get a real browser which supports WebSocket.');
-        return;
+
+function onMessage(message) {
+    console.log(username);
+    console.log(message.data);
+
+    if (username=== message.data){
+        alert("JUST GOT PROMOTED TO ADMIN, PLEASE RELOAD THE PAGE");
     }
-    console.log("LOGOU AO WS "+websocket);
 }
 
 function addAdmin(myid) {
-    websocket.send(myid.split(" -> ")[0]);
+    socket.send(myid.split(" -> ")[0]);
     $.ajax({
         type : "POST",
         url : "addAdmin",
         data : "username=" + myid.split(" -> ")[0],
         success : function(data) {
             $('#hotreload').fadeOut('fast').load(' #hotreload > *').fadeIn("fast");
+            $('#listUsers').load(' #listUsers > *', function(responseText, textStatus, XMLHttpRequest) {
+                const admin_user = document.getElementsByClassName("users");
+                for (var i = 0; i < admin_user.length; i++) {
+                    console.log("BOTAO CRL")
+                    admin_user[i].addEventListener("click", function(e) {
+                        e.preventDefault();
+                        console.log("CLICOUUUUUU!!")
+                        addAdmin(this.id.split(" -> ")[0]);
+
+                    })
+                }
+            });
+
         },
         error : function(data) {
             alert("Some error occured.");

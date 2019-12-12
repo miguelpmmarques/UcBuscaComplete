@@ -17,8 +17,8 @@
 <s:include value="navbar.jsp"></s:include>
 
 <div class="col-12 text-center">
-		<img class="logo" src="logo-SD.png">
-	</div>
+	<img class="logo" src="source.gif">
+</div>
 <div class="col-12 text-center">
 	<h1> <b>Add URL to Sparguetti Search</b></h1>
 		<br>

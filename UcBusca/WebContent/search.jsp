@@ -1,5 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,19 +27,27 @@
 
 </div>
 <br>
+<c:set var = "results" value = "${SearchModel.research}" />
+<p class="searchanswer">
+	<i>
+		Around
+		${fn:length(results)}
+		results found
+		(0,01 seconds, faster than google)
+	</i>
+</p>
 <div class="dotline"></div>
 <br>
 <div id="searches">
-	<c:forEach items="${SearchModel.research}" var="element">
+	<c:forEach items="${results}" var="element">
 
 		<div class="searchanswer">
-			<h4>
+			<h4 class="title">
 				<a  href='${element.get('url')}'>
 					<c:out value="${element.get('title')}" />
 
 				</a>
 			</h4>
-
 			<a class="linkurl" style="color:limegreen;" href='${element.get('url')}'>
 				<c:out value="${element.get('url')}" />
 				<b> <h7 class="language"></h7> </b>

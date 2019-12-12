@@ -99,6 +99,7 @@ public class SystemInfoModel {
 		}
 		return anwser;
 	}
+
 	private HashMap<String,String> retry(int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {
