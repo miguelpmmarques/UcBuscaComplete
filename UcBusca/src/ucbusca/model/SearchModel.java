@@ -50,7 +50,6 @@ public class SearchModel {
 					System.out.println("Sleep interrupted");
 				}
 			}
-
 	}
 
 	public String getSeachWords() {
@@ -73,7 +72,9 @@ public class SearchModel {
 		}else{
 
 			if (this.session.containsKey("loggedin") && this.session.get("loggedin").equals(true) ){
-				thisSearchWords = this.session.get("username")+" "+this.seachWords;
+				String username = (String) this.session.get("username");
+				username = username.replaceAll(" ","+");
+				thisSearchWords = username+" "+this.seachWords;
 			}else {
 				thisSearchWords = "Anonymous "+this.seachWords;
 			}
@@ -83,29 +84,33 @@ public class SearchModel {
 		}
 		for (String value : protocol.values()) {
 			HashMap<String,String> urlInfo  = new HashMap();
+
 			if (value.startsWith("http")){
+				String[] split_info = value.split("\\*oo#&");
+				System.out.println(value);
+				String url = split_info[0];
+				String title = "NO TITLE AVAILABLE";
+				String description ="NO DESCRIPTION AVAILABE";
 				try {
-					String[] split_info = value.split("\\*oo#&");
-					String url = split_info[0];
-					String title = split_info[1];
-					String description = split_info[2];
-					urlInfo.put("title", title);
-					urlInfo.put("description",description);
-					urlInfo.put("url", url);
-					urlInfo.put("found", "true");
+					title = split_info[1];
+					System.out.println("Title - "+title);
 				} catch (IndexOutOfBoundsException e){
-					String[] split_info = value.split("\\*oo#&");
-					String url = split_info[0];
-					urlInfo.put("found", "false");
-					urlInfo.put("title", "NO TITLE AVAILABLE");
-					urlInfo.put("description","NO DESCRIPTION AVAILABE");
-					urlInfo.put("url", url);
+					title = "NO TITLE AVAILABLE";
 				}
+				try {
+					description = split_info[2];
+					System.out.println("Description - "+description);
+				} catch (IndexOutOfBoundsException e){
+					description ="NO DESCRIPTION AVAILABE";
+				}
+				System.out.println("[INSERT] Description - "+description);
+				urlInfo.put("title", title);
+				urlInfo.put("description",description);
+				urlInfo.put("url", url);
+				urlInfo.put("found", "true");
 				anwser.add(urlInfo);
 			}
 		}
-
-
 
 		return anwser;
 	}
