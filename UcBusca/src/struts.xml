@@ -14,14 +14,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
     <constant name="struts.mapper.action.prefix.enabled" value="true"/>
 
 
-
-
-
-
     <package name="ucbusca" extends="struts-default, json-default">
-
-
-
         <default-action-ref name="index"/>
 
         <global-results>
@@ -98,8 +91,6 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         </action>
         <action name="fbLogin" class="ucbusca.action.FacebookLoginAction">
             <result type='json'>
-                <!--<param name="contentType">application/json</param>
-                <param name="facebook_url">facebook_url</param>-->
             </result>
         </action>
 
@@ -109,6 +100,15 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <action name="facebookAuth" class="ucbusca.action.FacebookAuth" method="execute">
             <result name="success">/close.jsp</result>
         </action>
+
+       <action name="fbShare" class="ucbusca.action.FacebookShareAction" method="execute">
+           <result type='json'>
+           </result>
+        </action>
+        <!--<action name="facebookShareAuth" class="ucbusca.action.FacebookShareAuthAction" method="execute">
+            <result name="success">/close.jsp</result>
+        </action> -->
+
 
 
 

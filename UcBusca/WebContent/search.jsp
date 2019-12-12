@@ -6,13 +6,15 @@
 <html>
 <head>
 	<link rel="stylesheet" href="style.css" >
+	<link rel="stylesheet" href="bootstrap-social.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="updateSearch.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
+	<script src="updateSearch.js"></script>
+	<script src="facebookSharing.js"></script>
 </head>
 <body>
 <s:include value="navbar.jsp"></s:include>
@@ -22,12 +24,14 @@
 		<s:textfield id="searchfield" cssClass="searchlanding" name="SearchModel.seachWords" />
 		<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Search" />
 	</s:form>
-
-
+		<button class="btn btn-block btn-social btn-primary btn-facebook btn-lg m-3" style="width:40%" id="signin_facebook">
+			<i class="fab fa-facebook-f pt-2" style="color:#fff"></i> Share your Searches With facebook
+		</button>
 </div>
 <br>
 <div class="dotline"></div>
 <br>
+
 <div id="searches">
 	<c:forEach items="${SearchModel.research}" var="element">
 
@@ -52,6 +56,7 @@
 	</c:forEach>
 
 </div>
+
 
 </body>
 </html>
