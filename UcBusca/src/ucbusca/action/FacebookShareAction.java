@@ -11,9 +11,7 @@ import com.github.scribejava.core.model.Token;
 
 import uc.sd.apis.FacebookApi2;
 
-public class FacebookShareAction extends ActionSupport implements SessionAware {
-    private static final long serialVersionUID = 5590830L;
-    private Map<String, Object> session;
+public class FacebookShareAction extends ActionSupport {
 
     private String facebookSession;
 
@@ -32,12 +30,5 @@ public class FacebookShareAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    @Override
-    public void setSession(Map<String, Object> session) {
-        this.session = session;
-    }
-    public Map<String, Object> getSession() {
-        return this.session;
-    }
 
 }

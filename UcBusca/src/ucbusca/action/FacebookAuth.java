@@ -45,7 +45,6 @@ import java.lang.reflect.Type;
 
 public class FacebookAuth extends ActionSupport implements SessionAware {
     private Logger logger = Logger.getLogger(String.valueOf(FacebookAuth.class));
-
     private static final long serialVersionUID = 5590830L;
     private Map<String, Object> session;
     private String username;
@@ -173,6 +172,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("username", username);
             session.put("loggedin", true);
             session.put("admin", false);
+            return true;
 
         } else if(protocol.get("status").equals("Admin")){
             System.out.println("Regist admin");
@@ -180,13 +180,13 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("username", username);
             session.put("loggedin", true);
             session.put("admin", true);
+            return true;
         }
         else {
             System.out.println("INVALID REGISTER");
             session.put("loggedin", false);
             return false;
         }
-        return true;
     }
 
     private boolean login(User thisUser, HashMap<String, String> protocol) {
@@ -195,6 +195,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
 
         } catch (RemoteException | InterruptedException | NotBoundException e) {
             e.printStackTrace();
+            return false;
         }
         //successful login for a common user
         if (protocol.get("status").equals("logged on")) {
@@ -214,7 +215,6 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
         //unsuccessful login, registering the user
         else {
             System.out.println("Atempting Register");
-            register(thisUser, protocol);
             return false;
         }
         return true;
