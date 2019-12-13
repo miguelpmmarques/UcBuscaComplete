@@ -15,14 +15,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>Uc Busca</title>
 </head>
 <body>
 <s:include value="navbar.jsp"></s:include>
 
+<footer class="page-footer font-small fixed-bottom">
+    <div class="footer-copyright text-center py-3">
+        Start with <b>http://</b> or <b>https:// </b> to find referenced <b>urls</b> in the search bar!
+    </div>
+    <div class="footer-copyright text-center py-3 bg-warning">
+        © 2019 Copyright: Miguel Marques & Paulo Cardoso
+    </div>
 
-
+</footer>
 <div class="row">
     <div class="col-12 text-center">
 
@@ -45,15 +52,6 @@
 
     </div>
 </div>
-<footer class="page-footer font-small fixed-bottom">
-    <div class="footer-copyright text-center py-3">
-        Start with <b>http://</b> or <b>https:// </b> to find referenced <b>urls</b> in the search bar!
-    </div>
-    <div class="footer-copyright text-center py-3 bg-warning">
-        © 2019 Copyright: Miguel Marques & Paulo Cardoso
-    </div>
-
-</footer>
 
 </body>
 
