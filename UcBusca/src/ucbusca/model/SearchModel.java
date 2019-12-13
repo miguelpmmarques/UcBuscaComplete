@@ -21,7 +21,10 @@ public class SearchModel {
 	private Properties prop = new Properties();
 	private Map<String, Object> session;
 
-	public SearchModel(Map<String, Object> session) {
+
+	public SearchModel(Map<String, Object> session, String searchWords) {
+		System.out.println("seach WOrds==="+searchWords);
+		this.seachWords = searchWords;
 		this.session = session;
 		String propFileName = "RMISERVER/config.properties";
 		InputStream inputStream = SearchModel.class.getClassLoader().getResourceAsStream(propFileName);
@@ -37,20 +40,21 @@ public class SearchModel {
 		System.out.println(prop.getProperty("LOOKUP"));
 
 
-			try {
-				this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
-				System.out.println("Connected to UcBusca");
+		try {
+			this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
+			System.out.println("Connected to UcBusca");
 
-			} catch (Exception e) {
-				System.out.println(e);
-				System.out.println("Connecting...");
-				try {
-					Thread.sleep(2000);
-				}catch (InterruptedException es){
-					System.out.println("Sleep interrupted");
-				}
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println("Connecting...");
+			try {
+				Thread.sleep(2000);
+			}catch (InterruptedException es){
+				System.out.println("Sleep interrupted");
 			}
+		}
 	}
+
 
 	public String getSeachWords() {
 		return this.seachWords;
@@ -165,5 +169,8 @@ public class SearchModel {
 			findWord(parameter,++replyCounter);
 		}
 		return new HashMap<String,String>();
+	}
+	public String toString(){
+		return this.seachWords;
 	}
 }

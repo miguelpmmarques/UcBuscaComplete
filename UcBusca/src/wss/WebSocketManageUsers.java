@@ -140,10 +140,7 @@ class CheckChanges extends Thread{
             } catch (NotBoundException e) {
                 e.printStackTrace();
             }
-            System.out.println("-- PREVIOUS --");
-            System.out.println(systemInfo);
-            System.out.println("-- ACT --");
-            System.out.println(systemInfoAct);
+
             ArrayList<String> one = new ArrayList<>( systemInfo.values());
             ArrayList<String> two = new ArrayList<>( systemInfoAct.values());
             Collections.sort(one);

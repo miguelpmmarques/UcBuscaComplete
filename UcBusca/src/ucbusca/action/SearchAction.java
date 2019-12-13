@@ -9,16 +9,28 @@ import ucbusca.model.SearchModel;
 public class SearchAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
+	private String words;
 
 	@Override
-	public String execute() throws Exception {
+	public String execute() {
+		this.words = getWords();
 		return SUCCESS;
 	}
 
 	public SearchModel getSearchModel() {
-		if(!session.containsKey("searchSession"))
-			this.setSearchModel(new SearchModel(session));
+
+		this.setSearchModel(new SearchModel(session, this.words));
+
 		return (SearchModel) session.get("searchSession");
+	}
+
+	public String getWords(){
+		System.out.println("WORDS---------------------------------->"+this.words);
+		return this.words;
+	}
+	public void setWords(String words){
+		System.out.println("SET WORDS---------------------------------->"+words);
+		this.words = words;
 	}
 
 	public void setSearchModel(SearchModel searchsession) {
@@ -27,6 +39,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public void setSession(Map<String, Object> session) {
+		System.out.println("SESSIONE ===" + session.get("searchSession"));
 		this.session = session;
 	}
 }

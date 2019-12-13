@@ -21,8 +21,8 @@
 <s:include value="navbar.jsp"></s:include>
 <div class="col-12 text-left">
 	<br>
-	<s:form id="myForm" cssClass = "searchanswer" action="search" method="post">
-		<s:textfield id="searchfield" cssClass="searchlanding" name="SearchModel.seachWords" />
+	<s:form id="myForm" cssClass = "searchanswer" action="search" method="get">
+		<s:textfield id="searchfield" cssClass="searchlanding" name="words" />
 		<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Search" />
 	</s:form>
 		<button class="btn btn-block btn-social btn-primary btn-facebook btn-lg m-3" style="width:40%" id="signin_facebook">
