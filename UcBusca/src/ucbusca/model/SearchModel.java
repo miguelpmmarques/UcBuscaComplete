@@ -1,6 +1,5 @@
 package ucbusca.model;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -9,12 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import RMISERVER.*;
 
-
+/**
+ * Handles the Bean the shows the result list in the search view
+ */
 public class SearchModel {
 	private String seachWords;
 	private ServerLibrary ucBusca;
@@ -56,6 +55,9 @@ public class SearchModel {
 	}
 
 
+	/**
+	 * @return Get the words in the textfield to be search
+	 */
 	public String getSeachWords() {
 		return this.seachWords;
 	}
@@ -64,6 +66,13 @@ public class SearchModel {
 		this.seachWords = seachWords;
 	}
 
+
+	/**
+	 * @return ArrayList of Hashmaps that contains the serach results
+	 * @throws InterruptedException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
 	public ArrayList<HashMap<String,String>> getResearch() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<HashMap<String,String>> anwser = new ArrayList<>();
@@ -119,6 +128,15 @@ public class SearchModel {
 		return anwser;
 	}
 
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter URL to be searched
+	 * @param replyCounter Retrys
+	 * @return
+	 * @throws RemoteException
+	 * @throws InterruptedException
+	 * @throws NotBoundException
+	 */
 	private HashMap<String,String> findURL(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {
@@ -144,7 +162,15 @@ public class SearchModel {
 		}
 		return new HashMap<String,String>();
 	}
-
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter word to be searched
+	 * @param replyCounter Retrys
+	 * @return
+	 * @throws RemoteException
+	 * @throws InterruptedException
+	 * @throws NotBoundException
+	 */
 	private HashMap<String,String> findWord(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {

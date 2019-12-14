@@ -2,10 +2,6 @@ package ucbusca.model;
 
 import RMISERVER.ServerLibrary;
 import RMISERVER.User;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -16,6 +12,9 @@ import java.util.Map;
 import java.util.Properties;
 
 
+/**
+ * Handles the Bean the shows the history list in the history view
+ */
 public class HistoryModel {
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
@@ -53,7 +52,13 @@ public class HistoryModel {
 
 	}
 
-	
+
+	/**
+	 * @return The arraylist with the history of the current user
+	 * @throws InterruptedException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
 	public ArrayList<String> getHistory() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<String> anwser = new ArrayList<>();
@@ -71,8 +76,15 @@ public class HistoryModel {
 		return anwser;
 	}
 
-
-
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter User selected to get history from
+	 * @param replyCounter Retrys
+	 * @return
+	 * @throws RemoteException
+	 * @throws InterruptedException
+	 * @throws NotBoundException
+	 */
 	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {

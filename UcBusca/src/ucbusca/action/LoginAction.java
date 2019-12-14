@@ -7,13 +7,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
 import java.io.InputStream;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Handle the log in and log out of our app
+ */
 public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
@@ -23,8 +24,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private Properties prop = new Properties();
 
 
+	/**
+	 * POST METHOD
+	 * @return Return ERROR in case the password dont match the username and blank fields
+	 * */
 	@Override
-	public String execute() throws Exception {
+	public String execute() {
 		String propFileName = "RMISERVER/config.properties";
 		InputStream inputStream = LoginAction.class.getClassLoader().getResourceAsStream(propFileName);
 		try {
@@ -53,8 +58,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			}
 		}
 		HashMap<String,String> protocol;
+		SearchRMIClient client = null;
+		try {
+			client = new SearchRMIClient(ucBusca, prop);
+		}catch (Exception e){
+			System.out.println("Error in LoginAction.java in line 57");
+		}
 
-		SearchRMIClient client = new SearchRMIClient(ucBusca,prop);
 		System.out.println(this.username);
 		System.out.println(this.password);
 		if (this.username.equals("")){
@@ -91,7 +101,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		return SUCCESS;
 	}
-	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter USER TO LOGIN
+	 * @param replyCounter Retrys
+	 * @return
+	 */
+	private HashMap<String,String> retry(Object parameter,int replyCounter) {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
@@ -116,6 +132,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return new HashMap<String,String>();
 	}
 
+	/**
+	 * Logout the current user
+	 * @return Always Sucess
+	 */
 	public String logout() {
 		// remove userName from the session
 		if (this.session.containsKey("username")) {

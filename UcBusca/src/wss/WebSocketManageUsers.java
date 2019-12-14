@@ -19,6 +19,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.OnMessage;
 import javax.websocket.Session;
 
+/**
+ * Handles all the websockets communication
+ */
 @ServerEndpoint(value = "/wss")
 public class WebSocketManageUsers {
     private static final Set<WebSocketManageUsers> users = new CopyOnWriteArraySet<>();
@@ -86,6 +89,10 @@ public class WebSocketManageUsers {
         }
     }
 }
+
+/**
+ * Theard that is always running the check if the system info is changed (2 seconds)
+ */
 class CheckChanges extends Thread{
     Properties prop;
     ServerLibrary ucBusca;

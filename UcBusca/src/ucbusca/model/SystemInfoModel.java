@@ -1,7 +1,6 @@
 package ucbusca.model;
 
 import RMISERVER.ServerLibrary;
-import RMISERVER.User;
 
 import java.io.InputStream;
 import java.rmi.NotBoundException;
@@ -13,6 +12,9 @@ import java.util.Map;
 import java.util.Properties;
 
 
+/**
+ * Handles the Bean the shows the system Statistcs in the System info view
+ */
 public class SystemInfoModel {
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
@@ -33,30 +35,28 @@ public class SystemInfoModel {
 		System.out.println(prop.getProperty("REGISTRYIP"));
 		System.out.println(prop.getProperty("REGISTRYPORT"));
 		System.out.println(prop.getProperty("LOOKUP"));
+		try {
+			this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
 
 
+			System.out.println("Connected to UcBusca");
+
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println("Connecting...");
 			try {
-				this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
-
-				//this.ucBusca = (ServerLibrary) Naming.lookup(prop.getProperty("LOOKUP"));
-
-				System.out.println("Connected to UcBusca");
-
-			} catch (Exception e) {
-				System.out.println(e);
-				System.out.println("Connecting...");
-				try {
-					Thread.sleep(2000);
-				}catch (InterruptedException es){
-					System.out.println("Sleep interrupted");
-				}
+				Thread.sleep(2000);
+			}catch (InterruptedException es){
+				System.out.println("Sleep interrupted");
 			}
-
-
+		}
 
 	}
 
-	public ArrayList<String> getActivemulticasts() throws InterruptedException, RemoteException, NotBoundException {
+	/**
+	 * @return List of active multicasts
+	 */
+	public ArrayList<String> getActivemulticasts() {
 		this.protocol = retry(0);
 		ArrayList<String> anwser = new ArrayList<>();
 		int arraySize = Integer.parseInt((String)this.protocol.get("activeMulticast_count"));
@@ -70,7 +70,11 @@ public class SystemInfoModel {
 		}
 		return anwser;
 	}
-	public ArrayList<String> getToppages() throws InterruptedException, RemoteException, NotBoundException {
+
+	/**
+	 * @return List of 10 most referenced web pages
+	 */
+	public ArrayList<String> getToppages(){
 		this.protocol = retry(0);
 		ArrayList<String> anwser = new ArrayList<>();
 		int arraySize = Integer.parseInt((String)this.protocol.get("important_pages_count"));
@@ -84,7 +88,11 @@ public class SystemInfoModel {
 		}
 		return anwser;
 	}
-	public ArrayList<String> getTopsearches() throws InterruptedException, RemoteException, NotBoundException {
+
+	/**
+	 * @return List of most popular searches
+	 */
+	public ArrayList<String> getTopsearches(){
 		this.protocol = retry(0);
 		ArrayList<String> anwser = new ArrayList<>();
 
@@ -100,7 +108,12 @@ public class SystemInfoModel {
 		return anwser;
 	}
 
-	private HashMap<String,String> retry(int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+	/**
+	 * Communication with the RMI SERVER
+	 * @param replyCounter Retrys
+	 * @return
+	 */
+	private HashMap<String,String> retry(int replyCounter){
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));

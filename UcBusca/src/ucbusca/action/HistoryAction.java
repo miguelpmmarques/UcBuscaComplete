@@ -7,12 +7,19 @@ import ucbusca.model.HistoryModel;
 
 import java.util.Map;
 
+/**
+ * Action to show the History View, add the history bean to the session
+ */
 public class HistoryAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
 
+	/**
+	 * @return GET METHOD
+	 * @throws Exception
+	 */
 	@Override
-	public String execute() throws Exception {
+	public String execute() {
 		return SUCCESS;
 	}
 

@@ -7,10 +7,16 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 
+/**
+ * This action only update the session
+ */
 public class AdminNotificationAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
 
+	/**
+	 * @return Always return Success and update the act. session
+	 */
 	@Override
 	public String execute() {
 

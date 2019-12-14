@@ -10,7 +10,7 @@ function main() {
     yandexTranslation();
 
     $("form").submit(function(e) {
-        //console.log(document.getElementById("searchfield").value);
+        console.log(document.getElementById("searchfield").value);
         /*$.ajax({
             url: "search.action",
             type: "POST",
@@ -40,19 +40,19 @@ function yandexTranslation() {
         let language_origin = '';
         const text = descriptions[i].innerHTML.trim();
         const title = titles[i].innerHTML;
-        //console.log(text);
+        console.log(text);
         if (text === "NO DESCRIPTION AVAILABE") {
-            //console.log("NAO TRADUZIU");
+            console.log("NAO TRADUZIU");
             language[i].innerHTML ="[Impossible To Traslate]";
         }else{
-            //console.log("TRADUZIU");
+            console.log("TRADUZIU");
             $.ajax({
                 url: "https://translate.yandex.net/api/v1.5/tr/detect?key=trnsl.1.1.20191206T010200Z.d1b35297d5cc4f1e.7b554c751eab0701225c480a7b5c93da8b6b7b75&text="+text,
                 type: "GET",
                 success: function(data) {
                     language_origin = data.firstChild.attributes.lang.value;
-                    //console.log(language_origin);
-                    //console.log(text);
+                    console.log(language_origin);
+                    console.log(text);
                     $.ajax({
                         url: "https://translate.yandex.net/api/v1.5/tr/translate?key=trnsl.1.1.20191206T010200Z.d1b35297d5cc4f1e.7b554c751eab0701225c480a7b5c93da8b6b7b75&text="+text+"&lang="+language_origin+"-pt",
                         type: "GET",
@@ -72,7 +72,7 @@ function yandexTranslation() {
                             titles[i].innerHTML = data.firstChild.textContent;
                         },
                         error : function() {
-                            //console.log("Can't translate title")
+                            console.log("Can't translate title")
                         }
                     });
                 },

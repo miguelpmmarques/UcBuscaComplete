@@ -121,7 +121,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
                 .provider(FacebookApi2.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .callback("https://raul.deus:8443/UcBusca/facebookAuth.action") // Do not change this.
+                .callback("https://localhost:8443/UcBusca/facebookAuth.action") // Do not change this.
                 .scope("public_profile")
                 .build();
         ;
