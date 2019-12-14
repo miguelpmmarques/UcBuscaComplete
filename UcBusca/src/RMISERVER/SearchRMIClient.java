@@ -131,9 +131,14 @@ public class SearchRMIClient extends UnicastRemoteObject implements ClientLibrar
         if (arraySize == 0)
             System.out.println(" -- EMPTY --");
         for(int i =1 ;i<arraySize+1;i++){
-            String url = (String)myDic.get("url_"+i);
-
-            System.out.println("URL ---> "+url);
+            String info = (String)myDic.get("url_"+i);
+            String[] split_info = info.split("\\*oo#&");
+            String url = split_info[0];
+            String title = split_info[1];
+            String description = split_info[2];
+            System.out.println("TITLE--> "+title);
+            System.out.println("DESCRIPTION-->"+ description);
+            System.out.println("URL ---> "+url+ "\n\n");
         }
     }
     /*

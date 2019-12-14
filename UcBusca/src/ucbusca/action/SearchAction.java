@@ -13,6 +13,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
 	private String words;
+	private String fbclid = null;
 
 	/**
 	 * @return GET METHOD
@@ -48,5 +49,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		System.out.println("SESSIONE ===" + session.get("searchSession"));
 		this.session = session;
+	}
+
+	public String getFbclid() {
+		return fbclid;
+	}
+
+	public void setFbclid(String fbclid) {
+		this.fbclid = fbclid;
 	}
 }

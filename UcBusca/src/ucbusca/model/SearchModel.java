@@ -76,10 +76,11 @@ public class SearchModel {
 	public ArrayList<HashMap<String,String>> getResearch() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<HashMap<String,String>> anwser = new ArrayList<>();
-		System.out.println(this.seachWords);
+		System.out.println("OLE===="+this.seachWords);
 		String thisSearchWords;
 
 		if (this.seachWords.startsWith("http://") ||  this.seachWords.startsWith("https://")){
+			System.out.println("ENTROU==");
 			protocol =  findURL(this.seachWords,0);
 
 		}else{
