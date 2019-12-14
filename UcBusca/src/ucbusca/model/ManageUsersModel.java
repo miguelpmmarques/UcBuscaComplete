@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.Properties;
 
 
+/**
+ * Handles the Bean the shows the users list in the manage users view
+ */
 public class ManageUsersModel {
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
@@ -32,8 +35,6 @@ public class ManageUsersModel {
 		System.out.println(prop.getProperty("REGISTRYIP"));
 		System.out.println(prop.getProperty("REGISTRYPORT"));
 		System.out.println(prop.getProperty("LOOKUP"));
-
-
 		try {
 			this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT") )).lookup(prop.getProperty("LOOKUP") );
 			System.out.println("Connected to UcBusca");
@@ -48,7 +49,12 @@ public class ManageUsersModel {
 		}
 	}
 
-	
+	/**
+	 * @return The arraylist with the Users that registered in the Application
+	 * @throws InterruptedException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
 	public ArrayList<String> getManageusers() throws InterruptedException, RemoteException, NotBoundException {
 		HashMap<String,String> protocol;
 		ArrayList<String> anwser = new ArrayList<>();
@@ -66,7 +72,11 @@ public class ManageUsersModel {
 	}
 
 
-
+	/**
+	 * Communication with the RMI SERVER
+	 * @param replyCounter Retrys
+	 * @return Protocol hashmap
+	 */
 	private HashMap<String,String> retry(int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
 		HashMap<String,String> myDic;
 		try {

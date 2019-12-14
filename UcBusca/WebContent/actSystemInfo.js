@@ -30,7 +30,7 @@ function onMessageSystem(message) {
     if ("CHANGED"=== message.data){
         console.log("BATEU CARALHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         window.location.href = '';
-        $('#reloadStuff').fadeOut('fast').load(' #reloadStuff > *').fadeIn("fast");
+        $('#reloadStuff').load('reloadStuff');
         /*
         alert("JUST GOT PROMOTED TO ADMIN IF YOU CHANGE PAGE YOU WI'LL HAVE THE ADMIN'S NAVBAR");
         $.ajax({

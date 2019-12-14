@@ -30,8 +30,6 @@ function popitup(url,windowName) {
 }
 
 function requestUrl(e){
-    /*console.log(urlParams.has('post')); // true
-    console.log(urlParams.get('action'));*/
     $.ajax({
         url: "fbLogin",
         data: {},

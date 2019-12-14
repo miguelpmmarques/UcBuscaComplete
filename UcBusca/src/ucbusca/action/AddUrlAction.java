@@ -14,7 +14,9 @@ import java.rmi.registry.LocateRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
+/**
+ * Action that includes the GET and POST of the ADD URL VIEW
+ */
 public class AddUrlAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
     private Map<String, Object> session;
@@ -22,9 +24,12 @@ public class AddUrlAction extends ActionSupport implements SessionAware {
     private ServerLibrary ucBusca;
     private Properties prop = new Properties();
 
-
+    /**
+     * POST METHOD
+     * @return Success or notAdmin in case the user dont have permission to acess the page
+     */
     @Override
-    public String execute() throws Exception {
+    public String execute(){
         boolean flag = (boolean) session.get("admin");
         if (!flag){
             return "notAdmin";
@@ -38,8 +43,6 @@ public class AddUrlAction extends ActionSupport implements SessionAware {
             System.out.println("Cannot read properties File");
             return ERROR;
         }
-
-
         try {
             this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
             System.out.println("Connected to UcBusca");
@@ -54,8 +57,6 @@ public class AddUrlAction extends ActionSupport implements SessionAware {
             }
         }
         HashMap<String, String> protocol;
-
-        SearchRMIClient client = new SearchRMIClient(ucBusca, prop);
         System.out.println("-----" + this.url + "-----");
 
         if (this.url.trim().length() == 0 || !this.url.contains(".") || (!this.url.startsWith("http://") && !this.url.startsWith("https://"))) {
@@ -67,8 +68,13 @@ public class AddUrlAction extends ActionSupport implements SessionAware {
         addActionMessage("URL add with success");
         return SUCCESS;
     }
-
-    private HashMap<String, String> retry(Object parameter, int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+    /**
+     * Communication with the RMI SERVER
+     * @param parameter URL ADDED
+     * @param replyCounter Retrys
+     * @return
+     */
+    private HashMap<String, String> retry(Object parameter, int replyCounter) {
         HashMap<String, String> myDic;
         try {
             this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));

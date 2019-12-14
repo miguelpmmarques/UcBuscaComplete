@@ -13,7 +13,9 @@ import java.rmi.registry.LocateRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
+/**
+ * Handle the register of our app
+ */
 public class RegisterAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
@@ -23,8 +25,12 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
 
+	/**
+	 * POST METHOD
+	 * @return Return ERROR in case the passwords dont match, blank fields and username already taken
+	 */
 	@Override
-	public String execute() throws Exception {
+	public String execute(){
 		String propFileName = "RMISERVER/config.properties";
 		InputStream inputStream = RegisterAction.class.getClassLoader().getResourceAsStream(propFileName);
 		try {
@@ -53,7 +59,12 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			}
 		}
 		HashMap<String,String> protocol;
-		SearchRMIClient client = new SearchRMIClient(ucBusca,prop);
+		SearchRMIClient client = null;
+		try {
+			client = new SearchRMIClient(ucBusca, prop);
+		}catch (Exception e){
+			System.out.println("Error in LoginAction.java in line 57");
+		}
 		System.out.println(this.username);
 		System.out.println(this.password);
 		if (this.username.equals("")){
@@ -95,7 +106,13 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 
 		return SUCCESS;
 	}
-	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter USER TO REGIST
+	 * @param replyCounter Retrys
+	 * @return
+	 */
+	private HashMap<String,String> retry(Object parameter,int replyCounter) {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
@@ -118,21 +135,6 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			retry(parameter,++replyCounter);
 		}
 		return new HashMap<String,String>();
-	}
-
-	public String logout() {
-		// remove userName from the session
-		if (this.session.containsKey("username")) {
-			this.session.remove("username");
-		}
-		if (this.session.containsKey("loggedin")) {
-			this.session.remove("loggedin");
-		}
-		if (this.session.containsKey("admin")) {
-			this.session.remove("admin");
-		}
-
-		return SUCCESS;
 	}
 
 

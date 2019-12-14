@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Action that includes the GET and POST of the ADD URL VIEW
+ */
 public class AddAdminAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
@@ -21,17 +24,12 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 	private ServerLibrary ucBusca;
 	private Properties prop = new Properties();
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
+	/**
+	 * POST METHOD
+	 * @return Success or notAdmin in case the user dont have permission to acess the page
+	 */
 	@Override
-	public String execute() throws Exception {
+	public String execute(){
 		if (!session.containsKey("admin") || !(boolean) session.get("admin")){
 			return "notAdmin";
 		}
@@ -66,7 +64,14 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 
 		return SUCCESS;
 	}
-	private HashMap<String,String> retry(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+
+	/**
+	 * Communication with the RMI SERVER
+	 * @param parameter USERNAME FROM NEW ADMIN
+	 * @param replyCounter Retrys
+	 * @return
+	 */
+	private HashMap<String,String> retry(Object parameter,int replyCounter) {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
@@ -89,21 +94,6 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 			retry(parameter,++replyCounter);
 		}
 		return new HashMap<String,String>();
-	}
-
-	public String logout() {
-		// remove userName from the session
-		if (this.session.containsKey("username")) {
-			this.session.remove("username");
-		}
-		if (this.session.containsKey("loggedin")) {
-			this.session.remove("loggedin");
-		}
-		if (this.session.containsKey("admin")) {
-			this.session.remove("admin");
-		}
-
-		return SUCCESS;
 	}
 
 

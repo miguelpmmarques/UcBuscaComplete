@@ -7,10 +7,16 @@ import ucbusca.model.ManageUsersModel;
 
 import java.util.Map;
 
+/**
+ * Action to show the Manage Users View, add the manage users bean to the session
+ */
 public class ManageUsersAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 5590830L;
 	private Map<String, Object> session;
-
+	/**
+	 * @return GET METHOD
+	 * @throws Exception
+	 */
 	@Override
 	public String execute() {
 		if (!session.containsKey("admin") || !(boolean) session.get("admin")){
