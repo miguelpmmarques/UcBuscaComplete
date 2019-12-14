@@ -17,7 +17,7 @@
 <h1 class="display-2 text-center"> <b> SYSTEM INFO</b> </h1>
 <br>
 <br>
-<div class="row reloadStuff">
+<div id = "reloadStuff" class="row">
 	<div class="col-3">
 		<h2 class=" text-center"> <b> Active Multicasts</b> </h2>
 		<br>

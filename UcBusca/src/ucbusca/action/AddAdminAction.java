@@ -60,6 +60,7 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 				System.out.println("Sleep interrupted");
 			}
 		}
+
 		retry(this.username,0);
 
 		return SUCCESS;
@@ -73,6 +74,7 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 	 */
 	private HashMap<String,String> retry(Object parameter,int replyCounter) {
 		HashMap<String,String> myDic;
+		System.out.println("USERadMIN-----> "+parameter);
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
 			myDic = this.ucBusca.changeUserPrivileges((String) parameter);
@@ -103,6 +105,12 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 	}
 	public Map<String, Object> getSession() {
 		return this.session;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 
