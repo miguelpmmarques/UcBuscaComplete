@@ -1,41 +1,19 @@
 package ucbusca.action;
 
-import RMISERVER.SearchRMIClient;
-import RMISERVER.ServerLibrary;
-import RMISERVER.User;
-import com.google.gson.Gson;
+
 import com.opensymphony.xwork2.ActionSupport;
-import org.apache.struts2.interceptor.SessionAware;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-import ucbusca.model.HistoryModel;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.UnknownHostException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Scanner;
 
 
-import com.github.scribejava.apis.FacebookApi;
+
 import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
+
 import com.github.scribejava.core.model.Token;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.model.Verifier;
+
 import com.github.scribejava.core.oauth.OAuthService;
 
 import uc.sd.apis.FacebookApi2;
 
-public class FacebookLoginAction extends ActionSupport {
+public class AssociateFacebookAction extends ActionSupport {
     private static final long serialVersionUID = 5590830L;
     private static final String NETWORK_NAME = "Facebook";
     private static final String PROTECTED_RESOURCE_URL = "https://graph.facebook.com/me";
@@ -50,7 +28,7 @@ public class FacebookLoginAction extends ActionSupport {
                 .provider(FacebookApi2.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .callback("https://raul.deus:8443/UcBusca/facebookAuth.action") // Do not change this.
+                .callback("https://raul.deus:8443/UcBusca/associateFacebookAuth.action") // Do not change this.//
                 .scope("public_profile")
                 .build();
 
@@ -69,3 +47,4 @@ public class FacebookLoginAction extends ActionSupport {
     }
 
 }
+

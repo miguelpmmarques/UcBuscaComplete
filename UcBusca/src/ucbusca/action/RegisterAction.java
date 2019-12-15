@@ -116,7 +116,7 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
-			myDic = this.ucBusca.userRegistration((User)parameter);
+			myDic = this.ucBusca.userRegistration((User)parameter,false);
 			System.out.println(myDic);
 			return myDic;
 

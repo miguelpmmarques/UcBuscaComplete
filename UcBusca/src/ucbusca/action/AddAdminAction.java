@@ -73,6 +73,7 @@ public class AddAdminAction extends ActionSupport implements SessionAware {
 	 */
 	private HashMap<String,String> retry(Object parameter,int replyCounter) {
 		HashMap<String,String> myDic;
+		System.out.println("PARAMETER=================="+parameter);
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
 			myDic = this.ucBusca.changeUserPrivileges((String) parameter);

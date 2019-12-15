@@ -83,6 +83,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", false);
+			if(protocol.get("Fb").equals("true")){
+				session.put("facebookAssociation", true);
+			}else{
+				session.put("facebookAssociation", false);
+			}
 
 		} else if(protocol.get("status").equals("logged admin")){
 			addActionMessage("LOG ON AS AN ADMINISTRATOR");
@@ -90,6 +95,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", true);
+			if(protocol.get("Fb").equals("true")){
+				session.put("facebookAssociation", true);
+			}else{
+				session.put("facebookAssociation", false);
+			}
 		}
 		else {
 			System.out.println("INVALID LOGIN");
@@ -111,7 +121,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		HashMap<String,String> myDic;
 		try {
 			this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
-			myDic = this.ucBusca.userLogin((User)parameter);
+			myDic = this.ucBusca.userLogin((User)parameter, false);
 			System.out.println(myDic);
 			return myDic;
 

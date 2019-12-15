@@ -107,6 +107,20 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/close.jsp</result>
         </action>
 
+
+
+        <action name="associateFacebook" class="ucbusca.action.AssociateFacebookAction">
+            <result type='json'>
+            </result>
+        </action>
+        <action name="associateFacebookAuth" class="ucbusca.action.AssociateFacebookAuthAction" method="execute">
+            <result name="success">/close.jsp</result>
+        </action>
+
+
+
+
+
        <action name="fbShare" class="ucbusca.action.FacebookShareAction" method="execute">
            <result type='json'>
            </result>

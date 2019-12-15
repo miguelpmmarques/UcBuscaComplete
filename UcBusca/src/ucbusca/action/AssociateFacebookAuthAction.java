@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
@@ -43,8 +44,8 @@ import com.google.common.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 
-public class FacebookAuth extends ActionSupport implements SessionAware {
-    private Logger logger = Logger.getLogger(String.valueOf(FacebookAuth.class));
+public class AssociateFacebookAuthAction extends ActionSupport implements SessionAware {
+    private Logger logger = Logger.getLogger(String.valueOf(AssociateFacebookAuthAction.class));
     private static final long serialVersionUID = 5590830L;
     private Map<String, Object> session;
     private String username;
@@ -75,7 +76,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
     }
 
 
-    public String execute() throws Exception{
+    public String execute() throws Exception {
         //necessary variables for facebook api login and rmi client setup
         String apiKey = "3327462673961598";
         String apiSecret = "994cd6e13ace400e63e368cd349a98fd";
@@ -121,7 +122,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
                 .provider(FacebookApi2.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .callback("https://raul.deus:8443/UcBusca/facebookAuth.action") // Do not change this.                .scope("public_profile")
+                .callback("https://raul.deus:8443/UcBusca/associateFacebookAuth.action") // Do not change this.                .scope("public_profile")
                 .build();
         ;
 
@@ -139,96 +140,29 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
 
         // parsing facebook's response - first converting the strings to utf, and then parsing the json to a hashMap
         String text = StringEscapeUtils.unescapeJava(response.getBody());
-        Type mapType = new TypeToken<Map<String, String>>(){}.getType();
+        Type mapType = new TypeToken<Map<String, String>>() {
+        }.getType();
         Map<String, String> user_map = new Gson().fromJson(text, mapType);
-        System.out.println("map==="+ user_map);
+        System.out.println("map===" + user_map);
         this.username = user_map.get("name");
         this.password = user_map.get("id");
-        System.out.printf("username=="+ this.username);
-        System.out.println("password=="+ this.password);
-
+        User thisUser = (User) this.session.get("user");
+        thisUser.setUsernameFb(this.username);
+        thisUser.setPasswordFb(this.password);
+        protocol = retry(thisUser, 0);
+        System.out.println("PROTOCOL MOFO ======="+protocol);
+        this.session.put("user", thisUser);
+        this.session.put("facebookAssociation", true);
         //creating the user instance, to attempt the login into our application
-        User thisUser = new User(this.username, this.password, true, client);
-
-        if (!login(thisUser, protocol)) {
-            if (!register(thisUser, protocol)) {
-                return ERROR;
-            }
-        }
         return SUCCESS;
     }
 
-    private Boolean register(User thisUser,HashMap<String, String> protocol) {
 
-        try{
-            protocol =  retryRegister(thisUser,0);
-        }catch(RemoteException | InterruptedException | NotBoundException e){
-            e.printStackTrace();
-        }
-
-        if(protocol.get("status").equals("Success")){
-            session.put("user",thisUser);
-            session.put("username", username);
-            session.put("loggedin", true);
-            session.put("admin", false);
-            session.put("facebookAssociation", true);
-            return true;
-
-        } else if(protocol.get("status").equals("Admin")){
-            System.out.println("Regist admin");
-            session.put("user",thisUser);
-            session.put("username", username);
-            session.put("loggedin", true);
-            session.put("admin", true);
-            session.put("facebookAssociation", true);
-            return true;
-        }
-        else {
-            System.out.println("INVALID REGISTER");
-            session.put("loggedin", false);
-            return false;
-        }
-    }
-
-    private boolean login(User thisUser, HashMap<String, String> protocol) {
-        try {
-            protocol = retryLogin(thisUser, 0);
-
-        } catch (RemoteException | InterruptedException | NotBoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-        //successful login for a common user
-        if (protocol.get("status").equals("logged on")) {
-            System.out.println("LOGIN UTILIZADOR");
-            session.put("user", thisUser);
-            session.put("username", username);
-            session.put("loggedin", true);
-            session.put("admin", false);
-            session.put("facebookAssociation", true);
-            //successful login for admin
-        } else if (protocol.get("status").equals("logged admin")) {
-            System.out.println("LOGIN UTILIZADOR");
-            session.put("user", thisUser);
-            session.put("username", username);
-            session.put("loggedin", true);
-            session.put("admin", true);
-            session.put("facebookAssociation", true);
-        }
-        //unsuccessful login, registering the user
-        else {
-            System.out.println("Atempting Register");
-            return false;
-        }
-        return true;
-    }
-
-
-    private HashMap<String, String> retryLogin(Object parameter, int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
+    private HashMap<String, String> retry(Object parameter, int replyCounter) {
         HashMap<String, String> myDic;
         try {
             this.ucBusca = (ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
-            myDic = this.ucBusca.userLogin((User) parameter, true);
+            myDic = this.ucBusca.setFbAssociation((User) parameter);
             System.out.println(myDic);
             return myDic;
 
@@ -244,35 +178,8 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             }
             System.out.println(e);
             System.out.println("Retransmiting... " + replyCounter);
-            retryLogin(parameter, ++replyCounter);
+            retry(parameter, ++replyCounter);
         }
         return new HashMap<String, String>();
     }
-    private HashMap<String,String> retryRegister(Object parameter,int replyCounter) throws RemoteException, InterruptedException, NotBoundException {
-        HashMap<String,String> myDic;
-        try {
-            this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
-            myDic = this.ucBusca.userRegistration((User)parameter,true);
-            System.out.println(myDic);
-            return myDic;
-
-        }catch (Exception e) {
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException e2) {
-                System.out.println("Interrupted");
-            }
-            if (replyCounter>16){
-                System.out.println("Please, try no reconnect to the UcBusca");
-                System.exit(0);
-            }
-            System.out.println(e);
-            System.out.println("Retransmiting... "+replyCounter);
-            retryRegister(parameter,++replyCounter);
-        }
-        return new HashMap<String,String>();
-    }
 }
-
-
-

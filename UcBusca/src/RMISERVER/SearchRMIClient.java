@@ -151,7 +151,7 @@ public class SearchRMIClient extends UnicastRemoteObject implements ClientLibrar
             this.ucBusca=(ServerLibrary) LocateRegistry.getRegistry(prop.getProperty("REGISTRYIP"), Integer.parseInt(prop.getProperty("REGISTRYPORT"))).lookup(prop.getProperty("LOOKUP"));
             switch (rmiMethod){
                 case rmiLOGIN:
-                    myDic = this.ucBusca.userLogin((User)parameter);
+                    myDic = this.ucBusca.userLogin((User)parameter, false);
                     if(myDic.get("status").equals("logged on")){
                         this.thisUser = new User(((User) parameter).getUsername(),((User) parameter).getPassword(),this);
                         System.out.println("YOU JUST LOGGED ON");
@@ -167,7 +167,8 @@ public class SearchRMIClient extends UnicastRemoteObject implements ClientLibrar
                     }
                     break;
                 case rmiREGISTRATION:
-                    myDic = this.ucBusca.userRegistration((User)parameter);
+                    System.out.println("DOING REGISTRATION !");
+                    myDic = this.ucBusca.userRegistration((User)parameter, false);
                     if(myDic.get("status").equals("Success")){
                         System.out.println("YOU JUST LOGGED ON");
                         this.mainMenu();
