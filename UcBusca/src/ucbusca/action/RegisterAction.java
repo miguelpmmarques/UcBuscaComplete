@@ -88,6 +88,7 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", false);
+			session.put("facebookAssociation", false);
 
 		} else if(protocol.get("status").equals("Admin")){
 			System.out.println("Regist admin");
@@ -95,6 +96,7 @@ public class RegisterAction extends ActionSupport implements SessionAware {
 			session.put("username", username);
 			session.put("loggedin", true);
 			session.put("admin", true);
+			session.put("facebookAssociation", false);
 			addActionMessage("LOG ON AS AN ADMINISTRATOR");
 		}
 		else {
