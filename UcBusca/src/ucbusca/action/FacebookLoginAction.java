@@ -35,6 +35,10 @@ import com.github.scribejava.core.oauth.OAuthService;
 
 import uc.sd.apis.FacebookApi2;
 
+
+/**
+ * Action to generate the facebook login link via the scribejava OAUTH library
+ */
 public class FacebookLoginAction extends ActionSupport {
     private static final long serialVersionUID = 5590830L;
     private static final String NETWORK_NAME = "Facebook";
@@ -58,7 +62,9 @@ public class FacebookLoginAction extends ActionSupport {
         String authorizationUrl = service.getAuthorizationUrl(EMPTY_TOKEN);
         return authorizationUrl;
     }
-
+    /**
+     * @return GET METHOD
+     */
     @Override
     public String execute() {
 

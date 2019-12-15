@@ -42,7 +42,9 @@ import com.google.common.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-
+/**
+ * Action to verify the facebook access code and call a login or register method, if the user hasn't yet registered
+ */
 public class FacebookAuth extends ActionSupport implements SessionAware {
     private Logger logger = Logger.getLogger(String.valueOf(FacebookAuth.class));
     private static final long serialVersionUID = 5590830L;
@@ -74,7 +76,11 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
         this.code = code;
     }
 
-
+    /**
+     * @return GET METHOD
+     * @throws Exception
+     */
+    @Override
     public String execute() throws Exception{
         //necessary variables for facebook api login and rmi client setup
         String apiKey = "3327462673961598";

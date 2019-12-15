@@ -43,7 +43,9 @@ import com.google.common.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-
+/**
+ * Action to verify the facebook login link and call the rmi remote method setFacebookAssociation, to add the facebook credentials to the user object
+ */
 public class AssociateFacebookAuthAction extends ActionSupport implements SessionAware {
     private Logger logger = Logger.getLogger(String.valueOf(AssociateFacebookAuthAction.class));
     private static final long serialVersionUID = 5590830L;
@@ -75,8 +77,10 @@ public class AssociateFacebookAuthAction extends ActionSupport implements Sessio
         this.code = code;
     }
 
-
-    public String execute() throws Exception {
+    /**
+     * @return GET METHOD
+     */
+    public String execute()  {
         //necessary variables for facebook api login and rmi client setup
         String apiKey = "3327462673961598";
         String apiSecret = "994cd6e13ace400e63e368cd349a98fd";

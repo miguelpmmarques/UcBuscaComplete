@@ -13,12 +13,16 @@ import com.github.scribejava.core.oauth.OAuthService;
 
 import uc.sd.apis.FacebookApi2;
 
+/**
+ * Action to generate the facebook login link and redirect the user to the AssociateFacebookAuthAction.
+ */
 public class AssociateFacebookAction extends ActionSupport {
     private static final long serialVersionUID = 5590830L;
     private static final String NETWORK_NAME = "Facebook";
     private static final String PROTECTED_RESOURCE_URL = "https://graph.facebook.com/me";
     private static final Token EMPTY_TOKEN = null;
     private String facebookSession;
+
 
     public String getFacebookSession(){
         String apiKey = "3327462673961598";
@@ -37,6 +41,9 @@ public class AssociateFacebookAction extends ActionSupport {
         return authorizationUrl;
     }
 
+    /**
+     * @return GET METHOD
+     */
     @Override
     public String execute() {
 

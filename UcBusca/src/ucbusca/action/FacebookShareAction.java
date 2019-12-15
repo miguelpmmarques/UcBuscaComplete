@@ -11,6 +11,9 @@ import com.github.scribejava.core.model.Token;
 
 import uc.sd.apis.FacebookApi2;
 
+/**
+ * Action to generate the Facebook feed share link and send it via ajax, in json format, to the frontend
+ */
 public class FacebookShareAction extends ActionSupport {
     private String words;
     private String facebookSession;
@@ -24,6 +27,9 @@ public class FacebookShareAction extends ActionSupport {
         return "https://www.facebook.com/dialog/feed?app_id="+apiKey+"&display=popup&href="+"https%3A%2F%2Fraul.deus%3A8443%2F&link="+link+"&redirect_uri=https://raul.deus:8443/UcBusca/closePopUp.action";
     }
 
+    /**
+     * @return GET METHOD
+     */
     @Override
     public String execute(){
 
