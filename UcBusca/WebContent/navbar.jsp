@@ -10,6 +10,8 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap-social.css">
+    <script src="associateFb.js"></script>
     <script src="realTimeNotifications.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -52,6 +54,15 @@
                                 </li>
                             </c:when>
                         </c:choose>
+                        <c:choose>
+                            <c:when test="${session.facebookAssociation}"></c:when>
+                            <c:otherwise>
+                                <li class="nav-item">
+                                    <button id="associate_facebook" class="nav-link text-white myTeamNav bg-primary border border-warning"><i class="fab fa-facebook-f pt-2" style="color:#fff"></i>  <b> Associate Facebook Account</b> </button>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+
                         <li class="nav-item">
                             <a class="nav-link text-white myTeamNav" href='<s:url action="history" ></s:url>'> <b> My
                                 History</b> </a>
