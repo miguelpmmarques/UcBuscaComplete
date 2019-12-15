@@ -172,6 +172,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("loggedin", true);
             session.put("admin", false);
             session.put("facebookAssociation", true);
+            setSession(session);
             return true;
 
         } else if(protocol.get("status").equals("Admin")){
@@ -181,6 +182,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("loggedin", true);
             session.put("admin", true);
             session.put("facebookAssociation", true);
+            setSession(session);
             return true;
         }
         else {
@@ -206,6 +208,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("loggedin", true);
             session.put("admin", false);
             session.put("facebookAssociation", true);
+            setSession(session);
             //successful login for admin
         } else if (protocol.get("status").equals("logged admin")) {
             System.out.println("LOGIN UTILIZADOR");
@@ -214,6 +217,7 @@ public class FacebookAuth extends ActionSupport implements SessionAware {
             session.put("loggedin", true);
             session.put("admin", true);
             session.put("facebookAssociation", true);
+            setSession(session);
         }
         //unsuccessful login, registering the user
         else {

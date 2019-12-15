@@ -88,6 +88,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			}else{
 				session.put("facebookAssociation", false);
 			}
+			setSession(session);
 
 		} else if(protocol.get("status").equals("logged admin")){
 			addActionMessage("LOG ON AS AN ADMINISTRATOR");
@@ -100,6 +101,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			}else{
 				session.put("facebookAssociation", false);
 			}
+			setSession(session);
 		}
 		else {
 			System.out.println("INVALID LOGIN");

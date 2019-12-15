@@ -153,6 +153,7 @@ public class AssociateFacebookAuthAction extends ActionSupport implements Sessio
         System.out.println("PROTOCOL MOFO ======="+protocol);
         this.session.put("user", thisUser);
         this.session.put("facebookAssociation", true);
+        setSession(session);
         //creating the user instance, to attempt the login into our application
         return SUCCESS;
     }
