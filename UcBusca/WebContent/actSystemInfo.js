@@ -15,7 +15,6 @@ function main() {
         alert('Get a real browser which supports WebSocket.');
         return;
     }
-    console.log("WELELELELEL");
     socket.onopen    = onOpenSystem;
     socket.onmessage = onMessageSystem;
     console.log(1)
@@ -28,22 +27,8 @@ function onMessageSystem(message) {
     console.log("----------->"+message.data);
 
     if ("CHANGED"=== message.data){
-        console.log("BATEU CARALHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         //window.location.href = '';
         $('#reloadStuff').fadeOut('fast').load(' #reloadStuff > *').fadeIn("fast");
-        /*
-        alert("JUST GOT PROMOTED TO ADMIN IF YOU CHANGE PAGE YOU WI'LL HAVE THE ADMIN'S NAVBAR");
-        $.ajax({
-            type : "POST",
-            url : "notifyAdmin",
-
-            success : function(data) {
-                console.log("ADMIN ADDED");
-            },
-            error : function(data) {
-                alert("Some error occured.");
-            }
-        });*/
     }
 }
 

@@ -33,7 +33,6 @@
                     <a href="/UcBusca"><img class="logoNavBar" src="logo-SD.png"></a>
                 </li>
             </ul>
-
             <c:choose>
                 <c:when test="${session.loggedin == true}">
                     <p id="username" style="visibility: hidden">${session.username}</p>
