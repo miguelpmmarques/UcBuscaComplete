@@ -25,7 +25,7 @@
 		<s:textfield id="searchfield" cssClass="searchlanding" name="words" />
 		<s:submit  cssClass="btn btn-light btn-outline-secondary smallmarginleft" value="Search" />
 	</s:form>
-		<button class="btn btn-block btn-social btn-primary btn-facebook btn-lg m-3" style="width:40%" id="signin_facebook">
+		<button class="btn btn-block btn-social btn-primary btn-facebook btn-lg m-3" style="width:40%" id="share_facebook">
 			<i class="fab fa-facebook-f pt-2" style="color:#fff"></i> Share your Searches With facebook
 		</button>
 </div>

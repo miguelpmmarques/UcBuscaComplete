@@ -6,28 +6,28 @@ if (document.readyState === "complete" ||
 }
 
 function main(){
-    var facebook_signin = document.getElementById("signin_facebook");
+    var share_signin = document.getElementById("share_facebook");
 
-    facebook_signin.addEventListener("click", (e)=>{
-        requestUrl(e);
+    share_signin.addEventListener("click", (e)=>{
+        request_Url(e);
     })
 
 }
 
-function receiveMessage(e, newWindow)
+function receive_Message(e, newWindow)
 {
     newWindow.close();
 }
-function popitup(url,windowName) {
+function pop_it_up(url,windowName) {
     newwindow=window.open(url,windowName,'height=200,width=150');
     if (window.focus) {newwindow.focus()}
     window.addEventListener("message", function(e){
-        receiveMessage(e, newwindow);
+        receive_Message(e, newwindow);
     });
     return false;
 }
 
-function requestUrl(e){
+function request_Url(e){
     var urlParams = new URLSearchParams(window.location.search);
     let words="";
     if (urlParams.has("words")){
@@ -54,7 +54,7 @@ function requestUrl(e){
         contentType: "application/json",
         success: function (data){
             console.log("SUCCESS==", data);
-            popitup(data.facebookSession, "Facebook Login")
+            pop_it_up(data.facebookSession, "Facebook Login")
         },
         failure: (data)=>{
             console.log("FAILURE===", data);
